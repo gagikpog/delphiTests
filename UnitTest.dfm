@@ -1,53 +1,131 @@
-object Form1: TForm1
+object Test: TTest
   Left = 0
   Top = 0
-  Caption = 'Form1'
-  ClientHeight = 347
-  ClientWidth = 706
+  Caption = 'Test'
+  ClientHeight = 493
+  ClientWidth = 776
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnResize = FormResize
   PixelsPerInch = 96
-  TextHeight = 13
-  object Button1: TButton
-    Left = 600
-    Top = 16
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 0
-  end
-  object Button2: TButton
-    Left = 600
-    Top = 64
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 1
-  end
-  object Button3: TButton
-    Left = 600
-    Top = 112
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 2
-  end
-  object RadioGroup1: TRadioGroup
-    Left = 32
-    Top = 40
-    Width = 313
-    Height = 161
-    Caption = 'RadioGroup1'
+  TextHeight = 16
+  object RadioGroupTest: TRadioGroup
+    AlignWithMargins = True
+    Left = 50
+    Top = 175
+    Width = 676
+    Height = 268
+    Margins.Left = 50
+    Margins.Top = 0
+    Margins.Right = 50
+    Margins.Bottom = 50
+    Align = alClient
     Items.Strings = (
       '1'
       '2'
       '3'
       '4')
-    TabOrder = 3
+    TabOrder = 0
+    Visible = False
+    ExplicitLeft = 48
+    ExplicitTop = 224
+    ExplicitWidth = 313
+    ExplicitHeight = 161
+  end
+  object PanelLevel: TPanel
+    Left = 455
+    Top = 228
+    Width = 313
+    Height = 257
+    TabOrder = 1
+    object BtnL1: TButton
+      Left = 72
+      Top = 32
+      Width = 169
+      Height = 40
+      Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 1'
+      TabOrder = 0
+      OnClick = BtnLClick
+    end
+    object BtnL2: TButton
+      Left = 72
+      Top = 90
+      Width = 169
+      Height = 40
+      Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 2'
+      TabOrder = 1
+      OnClick = BtnLClick
+    end
+    object BtnL3: TButton
+      Left = 72
+      Top = 152
+      Width = 169
+      Height = 40
+      Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 3'
+      TabOrder = 2
+      OnClick = BtnLClick
+    end
+  end
+  object PanelHead: TPanel
+    AlignWithMargins = True
+    Left = 50
+    Top = 50
+    Width = 676
+    Height = 122
+    Margins.Left = 50
+    Margins.Top = 50
+    Margins.Right = 50
+    Align = alTop
+    TabOrder = 2
+    Visible = False
+    ExplicitLeft = 40
+    ExplicitTop = 38
+    ExplicitWidth = 473
+    DesignSize = (
+      676
+      122)
+    object LabelQuestion: TLabel
+      AlignWithMargins = True
+      Left = 26
+      Top = 26
+      Width = 478
+      Height = 92
+      Margins.Left = 25
+      Margins.Top = 25
+      Align = alLeft
+      Alignment = taCenter
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      AutoSize = False
+      BiDiMode = bdLeftToRight
+      Caption = 
+        #1056#1077#1076#1082#1072#1103' '#1087#1088#1086#1075#1088#1072#1084#1084#1072' '#1086#1073#1093#1086#1076#1080#1090#1089#1103' '#1086#1076#1085#1086#1081' '#1092#1086#1088#1084#1086#1081'. '#1052#1099' '#1084#1086#1078#1077#1084' '#1089' '#1083#1105#1075#1082#1086#1089#1090#1100#1102' '#1089#1086 +
+        #1079#1076#1072#1074#1072#1090#1100' '#1076#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1099#1077' '#1092#1086#1088#1084#1099' Delphi, '#1087#1088#1077#1076#1086#1089#1090#1072#1074#1083#1103#1102#1097#1080#1077' '#1074#1086#1079#1084#1086#1078#1085#1086#1089#1090#1100 +
+        ', '#1085#1072#1087#1088#1080#1084#1077#1088', '#1074#1077#1089#1090#1080' '#1076#1080#1072#1083#1086#1075' '#1089' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077#1084', '#1087#1088#1080#1085#1080#1084#1072#1090#1100' '#1080' '#1074#1099#1074#1086#1076#1080#1090#1100' '#1083 +
+        #1102#1073#1091#1102' '#1085#1077#1086#1073#1093#1086#1076#1080#1084#1091#1102' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1102'. '#1042' '#1101#1090#1086#1084' '#1091#1088#1086#1082#1077' '#1085#1072#1091#1095#1080#1084#1089#1103' '#1089#1086#1079#1076#1072#1074#1072#1090#1100' '#1085#1077#1089 +
+        #1082#1086#1083#1100#1082#1086' '#1092#1086#1088#1084' Delphi '#1076#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1086' '#1082' '#1086#1089#1085#1086#1074#1085#1086#1081'.'
+      ParentBiDiMode = False
+      WordWrap = True
+      ExplicitLeft = 0
+      ExplicitTop = 55
+      ExplicitWidth = 794
+      ExplicitHeight = 67
+    end
+    object BtnCheck: TButton
+      Left = 542
+      Top = 45
+      Width = 105
+      Height = 31
+      Anchors = [akTop, akRight]
+      Caption = #1044#1072#1083#1077#1077
+      TabOrder = 0
+      OnClick = BtnCheckClick
+      ExplicitLeft = 936
+    end
   end
 end

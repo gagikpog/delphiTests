@@ -104,7 +104,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UnitTest.pas">
-            <Form>Form1</Form>
+            <Form>Test</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="UnitTestMove.pas">

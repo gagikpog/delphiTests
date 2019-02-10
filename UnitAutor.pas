@@ -60,6 +60,8 @@ end;
 procedure TFormAutor.ButtonRegistrationClick(Sender: TObject);
 begin
   FormRegistered.ShowModal;
+  ADODataSetUserTable.Active := false;
+  ADODataSetUserTable.Active := true;
 end;
 
 end.

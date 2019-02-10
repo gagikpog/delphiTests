@@ -2,8 +2,8 @@ object FormProgramm: TFormProgramm
   Left = 0
   Top = 0
   Caption = #1055#1088#1086#1075#1088#1072#1084#1084#1072
-  ClientHeight = 330
-  ClientWidth = 481
+  ClientHeight = 458
+  ClientWidth = 444
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,15 +14,16 @@ object FormProgramm: TFormProgramm
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
-    Left = 56
+    Left = 72
     Top = 40
     Width = 305
     Height = 73
     Caption = #1058#1077#1089#1090#1099
     TabOrder = 0
+    OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 56
+    Left = 72
     Top = 144
     Width = 305
     Height = 73

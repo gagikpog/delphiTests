@@ -20,6 +20,7 @@ type
     EditRegGroup: TEdit;
     ButtonStartRegistrated: TButton;
     ADOQueryStartRegistered: TADOQuery;
+    ADOQueryCheckUser: TADOQuery;
     procedure ButtonStartRegistratedClick(Sender: TObject);
   private
     { Private declarations }
@@ -37,63 +38,68 @@ implementation
 uses UnitAutor;
 
 procedure TFormRegistered.ButtonStartRegistratedClick(Sender: TObject);
-  var LogPass: array of string;
 begin
 // проверка на введенность текста
- if EditRegLogin.Text = '' then
- begin
- EditRegLogin.SetFocus;
-
- end;
-  if EditRegPassword.Text = '' then
- begin
- EditRegPassword.SetFocus;
-
- end;
-   if EditRegName.Text = '' then
-  begin EditRegName.SetFocus;
-
+  if EditRegLogin.Text = '' then
+  begin
+    EditRegLogin.SetFocus;
   end;
-   if EditRegFamily.Text = '' then
-   begin EditRegFamily.SetFocus;
 
-   end;
-    if EditRegLastName.Text = '' then
-    begin
+  if EditRegPassword.Text = '' then
+  begin
+  EditRegPassword.SetFocus;
+  end;
+
+  if EditRegName.Text = '' then
+  begin
+    EditRegName.SetFocus;
+  end;
+
+  if EditRegFamily.Text = '' then
+  begin
+    EditRegFamily.SetFocus;
+  end;
+
+  if EditRegLastName.Text = '' then
+  begin
     EditRegLastName.SetFocus;
+  end;
 
-    end;
-     if EditRegGroup.Text = '' then
-     begin
-     EditRegGroup.SetFocus;
+  if EditRegGroup.Text = '' then
+  begin
+    EditRegGroup.SetFocus;
+  end;
 
-     end;
+  if  (EditRegLogin.Text='')    or  (EditRegPassword.Text='') or
+      (EditRegName.Text='')     or  (EditRegFamily.Text='')   or
+      (EditRegLastName.Text='') or  (EditRegGroup.Text='')    then
+  begin
+    MessageBox(Handle,'Заполните все поля, пожалуйста!', 'Ошибка заполнения! ', Mb_ok );
+    exit;
+  end;
 
+  ADOQueryCheckUser.Active := false;
+  ADOQueryCheckUser.SQL.Clear;
+  ADOQueryCheckUser.SQL.add('SELECT UserName FROM Users WHERE (UserName = "'+ EditRegLogin.Text +'");');
+  ADOQueryCheckUser.Active := true;
+  ADOQueryCheckUser.ExecSQL;
 
-if (EditRegLogin.Text='')or (EditRegPassword.Text='')or(EditRegName.Text='')or(EditRegFamily.Text='')or
-     (EditRegLastName.Text='')or (EditRegGroup.Text='')then
- begin
- MessageBox(Handle,'Заполните все поля, пожалуйста!', 'Ошибка заполнения! ', Mb_ok );
-      exit;
- end;
+  if( NOT ADOQueryCheckUser.Eof) then
+  begin
+    MessageBox(Handle,'Этот логин уже занят!' , 'Ошибка заполнения! ', Mb_ok );
+    exit;
+  end;
 
-
-if (EditRegLogin.Text <> '')and (EditRegPassword.Text <> '' ) then
-begin
-         LogPass[1]:=ADOQueryStartRegistered.FieldValues['UserName'];
-
-ADOQueryStartRegistered.Parameters.ParamByName('RegUserName').Value:=EditRegLogin.Text;
-ADOQueryStartRegistered.Parameters.ParamByName('RegUserPassword').Value:=EditRegPassword.Text;
-ADOQueryStartRegistered.Parameters.ParamByName('RegUserNamePersonal').Value:=EditRegName.Text;
-ADOQueryStartRegistered.Parameters.ParamByName('RegUserFamilyPersonal').Value:=EditRegFamily.Text;
-ADOQueryStartRegistered.Parameters.ParamByName('RegUserLastNamePersonal').Value:=EditRegLastName.Text;
-ADOQueryStartRegistered.Parameters.ParamByName('RegUserSexPersonal').Value:=ComboBoxRegSex.ItemIndex;
-ADOQueryStartRegistered.Parameters.ParamByName('RegUserBitrhDayPersonal').Value:=DateTimePickerRegBirthDay.Date;
-ADOQueryStartRegistered.Parameters.ParamByName('RegUSerGroupPersonal').Value:=EditRegGroup.Text;
-ADOQueryStartRegistered.ExecSQL;
-close;
-end;
-
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUserName').Value:=EditRegLogin.Text;
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUserPassword').Value:=EditRegPassword.Text;
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUserNamePersonal').Value:=EditRegName.Text;
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUserFamilyPersonal').Value:=EditRegFamily.Text;
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUserLastNamePersonal').Value:=EditRegLastName.Text;
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUserSexPersonal').Value:=ComboBoxRegSex.ItemIndex;
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUserBitrhDayPersonal').Value:=DateTimePickerRegBirthDay.Date;
+  ADOQueryStartRegistered.Parameters.ParamByName('RegUSerGroupPersonal').Value:=EditRegGroup.Text;
+  ADOQueryStartRegistered.ExecSQL;
+  close;
 end;
 
 end.
