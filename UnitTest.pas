@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ToolWin,
+  Vcl.ActnMan, Vcl.ActnCtrls, Vcl.ActnMenus;
 type
     TSarray = array of string;
 type
@@ -17,6 +18,7 @@ type
     PanelHead: TPanel;
     BtnCheck: TButton;
     LabelQuestion: TLabel;
+    PanelButtons: TFlowPanel;
     procedure FormResize(Sender: TObject);
     procedure BtnLClick(Sender: TObject);
 
@@ -26,7 +28,10 @@ type
     function Split(const Texto, Delimitador: string): TSarray;
     procedure FormCreate(Sender: TObject);
     function LoadLevel(index:integer):string;
+    Procedure levelBtms(Sender: TObject);
     procedure BtnCheckClick(Sender: TObject);
+    Procedure MixArray(arr:TSArray);
+    procedure DeleteX(var A: TSArray; const Index: integer);
   private
     { Private declarations }
   public
@@ -42,10 +47,16 @@ implementation
 {$R *.dfm}
 
 procedure TTest.BtnCheckClick(Sender: TObject);
+var s:string;
 begin
-  if RightAnswer = RadioGroupTest.Items[RadioGroupTest.ItemIndex] then
+  if RadioGroupTest.ItemIndex < 0 then
+  begin
+    MessageBox(Handle,'надо что то выбрать','title',MB_OK);
+    exit;
+  end;
+  s:= RadioGroupTest.Items[RadioGroupTest.ItemIndex];
+  if Trim(RightAnswer) = Trim(s) then
     RightAnswer := LoadLevel(2);
-
 end;
 
 procedure TTest.BtnLClick(Sender: TObject);
@@ -53,18 +64,43 @@ begin
    panelLevel.Visible := false;
    RadioGroupTest.Visible := true;
    PanelHead.Visible := true;
+   Randomize;
+   RightAnswer := LoadLevel(1);
 end;
 
 procedure TTest.FormCreate(Sender: TObject);
+var btn:TButton;
+  I: Integer;
 begin
+  for I := 1 to 20 do
+  begin
+    btn := TButton.Create(nil);
+    btn.Caption := IntToStr(i);
+    btn.Height := PanelButtons.Height-2;
+    btn.OnClick := levelBtms;
+    btn.Parent := PanelButtons;
+  end;
   ParseTest();
-  RightAnswer := LoadLevel(1);
 end;
 
 procedure TTest.FormResize(Sender: TObject);
+var
+  component: TComponent;
+  w,l:integer;
+  I: Integer;
 begin
   panelLevel.Left := trunc((width - panelLevel.Width-15)/2);
   panelLevel.top := trunc((height - panelLevel.height-40)/2);
+  w := trunc((PanelButtons.Width-50)/20);
+  l := PanelButtons.Width - w*20;
+  PanelButtons.Padding.Left := trunc(l/2);
+  for I := 0 to PanelButtons.ControlCount - 1  do
+    PanelButtons.Controls[i].Width := w;
+end;
+
+Procedure TTest.levelBtms(Sender: TObject);
+begin
+  ShowMessage('load '+  (Sender as TButton).Caption+' task');
 end;
 
 Procedure TTest.ParseTest();
@@ -80,14 +116,41 @@ function TTest.LoadLevel(index:integer):string;
 var arr:TSarray;
   I: Integer;
 begin
-  arr := Split(TestsArray[index],#13);
+  arr := Split(TestsArray[index],#13#10);
   LabelQuestion.Caption := arr[0];
+  DeleteX(arr,0);
+  MixArray(arr);
   RadioGroupTest.Items.Clear;
-  for I := 1 to Length(arr)-2 do
+  for I := 0 to Length(arr)-1 do
   begin
     RadioGroupTest.Items.Add(arr[i].Substring(2));
-    if arr[i][2] = '+' then
-      result := arr[i].Substring(2);
+    if arr[i][1] = '+' then
+      result := arr[i].Substring(1);
+  end;
+end;
+
+procedure Ttest.DeleteX(var A: TSArray; const Index: integer);
+var
+  ALength,i: integer;
+begin
+  ALength := Length(A);
+  Assert(ALength > 0);
+  Assert(Index < ALength);
+  for i := Index + 1 to ALength - 1 do
+    A[i - 1] := A[i];
+  SetLength(A, ALength - 1);
+end;
+
+Procedure TTest.MixArray(arr:TSArray);
+var i,j:integer;
+  s:string;
+begin
+  for i := High(arr) downto 1 do
+  begin
+    j := Random(i + 1);
+    s := arr[i];
+    arr[i] := arr[j];
+    arr[j] := s;
   end;
 end;
 
@@ -138,7 +201,8 @@ begin
       SetLength(Result, i + 1);
     end;
   Result[i] := Copy(Texto, PosStart, Length(Texto));
+  if   Result[i] = '' then
+      SetLength(Result, i);
 end;
-
 
 end.

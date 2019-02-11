@@ -28,6 +28,7 @@ uses UnitTest;
 
 procedure TFormProgramm.Button1Click(Sender: TObject);
 begin
+  Unittest.Test := TTest.Create(nil);
   Unittest.Test.ShowModal;
 end;
 

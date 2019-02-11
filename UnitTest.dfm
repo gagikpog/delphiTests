@@ -2,15 +2,18 @@ object Test: TTest
   Left = 0
   Top = 0
   Caption = 'Test'
-  ClientHeight = 493
-  ClientWidth = 776
+  ClientHeight = 490
+  ClientWidth = 784
   Color = clBtnFace
+  Constraints.MinHeight = 500
+  Constraints.MinWidth = 800
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
   OnCreate = FormCreate
   OnResize = FormResize
   PixelsPerInch = 96
@@ -19,8 +22,8 @@ object Test: TTest
     AlignWithMargins = True
     Left = 50
     Top = 175
-    Width = 676
-    Height = 268
+    Width = 684
+    Height = 265
     Margins.Left = 50
     Margins.Top = 0
     Margins.Right = 50
@@ -33,10 +36,8 @@ object Test: TTest
       '4')
     TabOrder = 0
     Visible = False
-    ExplicitLeft = 48
-    ExplicitTop = 224
-    ExplicitWidth = 313
-    ExplicitHeight = 161
+    ExplicitWidth = 676
+    ExplicitHeight = 268
   end
   object PanelLevel: TPanel
     Left = 455
@@ -76,7 +77,7 @@ object Test: TTest
     AlignWithMargins = True
     Left = 50
     Top = 50
-    Width = 676
+    Width = 684
     Height = 122
     Margins.Left = 50
     Margins.Top = 50
@@ -84,20 +85,17 @@ object Test: TTest
     Align = alTop
     TabOrder = 2
     Visible = False
-    ExplicitLeft = 40
-    ExplicitTop = 38
-    ExplicitWidth = 473
+    ExplicitWidth = 676
     DesignSize = (
-      676
+      684
       122)
     object LabelQuestion: TLabel
       AlignWithMargins = True
       Left = 26
-      Top = 26
-      Width = 478
-      Height = 92
+      Top = 39
+      Width = 486
+      Height = 79
       Margins.Left = 25
-      Margins.Top = 25
       Align = alLeft
       Alignment = taCenter
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -117,15 +115,25 @@ object Test: TTest
       ExplicitHeight = 67
     end
     object BtnCheck: TButton
-      Left = 542
-      Top = 45
+      Left = 574
+      Top = 42
       Width = 105
       Height = 31
       Anchors = [akTop, akRight]
       Caption = #1044#1072#1083#1077#1077
       TabOrder = 0
       OnClick = BtnCheckClick
-      ExplicitLeft = 936
+      ExplicitLeft = 566
+    end
+    object PanelButtons: TFlowPanel
+      Left = 1
+      Top = 1
+      Width = 682
+      Height = 35
+      Align = alTop
+      Padding.Bottom = 1
+      TabOrder = 1
+      ExplicitWidth = 674
     end
   end
 end
