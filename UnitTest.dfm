@@ -9,7 +9,7 @@ object Test: TTest
   Constraints.MinWidth = 800
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -15
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
@@ -17,7 +17,7 @@ object Test: TTest
   OnCreate = FormCreate
   OnResize = FormResize
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 18
   object RadioGroupTest: TRadioGroup
     AlignWithMargins = True
     Left = 50
@@ -36,8 +36,6 @@ object Test: TTest
       '4')
     TabOrder = 0
     Visible = False
-    ExplicitWidth = 676
-    ExplicitHeight = 268
   end
   object PanelLevel: TPanel
     Left = 455
@@ -47,7 +45,7 @@ object Test: TTest
     TabOrder = 1
     object BtnL1: TButton
       Left = 72
-      Top = 32
+      Top = 48
       Width = 169
       Height = 40
       Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 1'
@@ -56,7 +54,7 @@ object Test: TTest
     end
     object BtnL2: TButton
       Left = 72
-      Top = 90
+      Top = 106
       Width = 169
       Height = 40
       Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 2'
@@ -65,7 +63,7 @@ object Test: TTest
     end
     object BtnL3: TButton
       Left = 72
-      Top = 152
+      Top = 168
       Width = 169
       Height = 40
       Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 3'
@@ -85,7 +83,6 @@ object Test: TTest
     Align = alTop
     TabOrder = 2
     Visible = False
-    ExplicitWidth = 676
     DesignSize = (
       684
       122)
@@ -123,7 +120,6 @@ object Test: TTest
       Caption = #1044#1072#1083#1077#1077
       TabOrder = 0
       OnClick = BtnCheckClick
-      ExplicitLeft = 566
     end
     object PanelButtons: TFlowPanel
       Left = 1
@@ -133,7 +129,6 @@ object Test: TTest
       Align = alTop
       Padding.Bottom = 1
       TabOrder = 1
-      ExplicitWidth = 674
     end
   end
 end

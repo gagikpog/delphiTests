@@ -4,73 +4,75 @@ object FormRegistered: TFormRegistered
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = #1060#1086#1088#1084#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080' '
-  ClientHeight = 247
-  ClientWidth = 428
+  ClientHeight = 245
+  ClientWidth = 454
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -15
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 18
   object EditRegLogin: TEdit
     Left = 160
-    Top = 24
-    Width = 121
-    Height = 21
+    Top = 19
+    Width = 137
+    Height = 26
     TabOrder = 0
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#1083#1086#1075#1080#1085
   end
   object EditRegPassword: TEdit
     Left = 160
     Top = 51
-    Width = 121
-    Height = 21
+    Width = 137
+    Height = 26
     PasswordChar = '*'
     TabOrder = 1
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#1087#1072#1088#1086#1083#1100
   end
   object TRadioGroupPersonalDB: TRadioGroup
     Left = 0
-    Top = 87
-    Width = 428
+    Top = 85
+    Width = 454
     Height = 160
     Align = alBottom
     Caption = #1055#1077#1088#1089#1086#1085#1072#1083#1100#1085#1072#1103' '#1076#1072#1085#1085#1099#1077
     TabOrder = 2
+    ExplicitTop = 87
+    ExplicitWidth = 428
   end
   object EditRegName: TEdit
     Left = 16
     Top = 112
-    Width = 121
-    Height = 21
+    Width = 137
+    Height = 26
     TabOrder = 3
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#1080#1084#1103
   end
   object EditRegFamily: TEdit
     Left = 160
     Top = 112
-    Width = 121
-    Height = 21
+    Width = 137
+    Height = 26
     TabOrder = 4
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#1092#1072#1084#1080#1083#1080#1102
   end
   object EditRegLastName: TEdit
-    Left = 296
+    Left = 303
     Top = 112
-    Width = 121
-    Height = 21
+    Width = 137
+    Height = 26
     TabOrder = 5
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#1086#1090#1095#1077#1089#1090#1074#1086
   end
   object ComboBoxRegSex: TComboBox
     Left = 160
     Top = 160
-    Width = 121
-    Height = 21
+    Width = 137
+    Height = 26
     TabOrder = 6
     Text = #1042#1099#1073#1077#1088#1080#1090#1077' '#1087#1086#1083
     Items.Strings = (
@@ -78,10 +80,10 @@ object FormRegistered: TFormRegistered
       #1046#1077#1085'.')
   end
   object DateTimePickerRegBirthDay: TDateTimePicker
-    Left = 296
+    Left = 303
     Top = 160
-    Width = 121
-    Height = 21
+    Width = 137
+    Height = 26
     Date = 43458.000000000000000000
     Time = 0.623866076392005200
     TabOrder = 7
@@ -89,15 +91,15 @@ object FormRegistered: TFormRegistered
   object EditRegGroup: TEdit
     Left = 16
     Top = 160
-    Width = 121
-    Height = 21
+    Width = 137
+    Height = 26
     TabOrder = 8
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#8470' '#1075#1088#1091#1087#1087#1099
   end
   object ButtonStartRegistrated: TButton
     Left = 160
     Top = 202
-    Width = 121
+    Width = 137
     Height = 25
     Caption = #1056#1077#1075#1080#1089#1090#1088#1072#1094#1080#1103
     TabOrder = 9

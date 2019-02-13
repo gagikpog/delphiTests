@@ -8,6 +8,12 @@ uses
   Vcl.ActnMan, Vcl.ActnCtrls, Vcl.ActnMenus;
 type
     TSarray = array of string;
+    TQuestionData = Record
+    StrArray : TSarray;
+    Question : String;
+    SelectedAnswer: integer;
+    Answer: integer;
+  end;
 type
   TTest = class(TForm)
     BtnL1: TButton;
@@ -31,6 +37,7 @@ type
     Procedure levelBtms(Sender: TObject);
     procedure BtnCheckClick(Sender: TObject);
     Procedure MixArray(arr:TSArray);
+    Procedure MixArrayInt(arr:array of integer);
     procedure DeleteX(var A: TSArray; const Index: integer);
   private
     { Private declarations }
@@ -42,6 +49,7 @@ var
   Test: TTest;
   RightAnswer:string;
   TestsArray:TSarray;
+  Data: array of TQuestionData;
 implementation
 
 {$R *.dfm}
@@ -49,6 +57,7 @@ implementation
 procedure TTest.BtnCheckClick(Sender: TObject);
 var s:string;
 begin
+{
   if RadioGroupTest.ItemIndex < 0 then
   begin
     MessageBox(Handle,'надо что то выбрать','title',MB_OK);
@@ -57,6 +66,7 @@ begin
   s:= RadioGroupTest.Items[RadioGroupTest.ItemIndex];
   if Trim(RightAnswer) = Trim(s) then
     RightAnswer := LoadLevel(2);
+}
 end;
 
 procedure TTest.BtnLClick(Sender: TObject);
@@ -106,16 +116,44 @@ end;
 Procedure TTest.ParseTest();
 var
   filename:string;
+  I,J: Integer;
+  Order : array of integer;
+  var arr:TSarray;
 begin
   filename := 'test.tdb';
   TestsArray := Split(Decode(ReadFromFile(filename),4),'/');
   Caption := TestsArray[0];
+  SetLength(Order,Length(TestsArray));
+  for I := 0 to Length(TestsArray)-1 do
+  begin
+    Order[i] := i+1;
+  end;
+  MixArrayInt(Order);
+  SetLength(Data,20);
+   {
+  for I := 0 to 19 do
+  begin
+    arr := Split(TestsArray[Order[i]],#13#10);
+    Data[i].Question := arr[0];
+    DeleteX(arr,0);
+    MixArray(arr);
+    for J := 0 to Length(arr)-1 do
+    begin
+      SetLength(Data[I].StrArray,J+1);
+      Data[I].StrArray[J] :=  arr[J].Substring(2);
+      if arr[i][1] = '+' then
+        Data[I].Answer := J;
+    end;
+
+  end;   }
+
 end;
 
 function TTest.LoadLevel(index:integer):string;
 var arr:TSarray;
   I: Integer;
 begin
+{
   arr := Split(TestsArray[index],#13#10);
   LabelQuestion.Caption := arr[0];
   DeleteX(arr,0);
@@ -127,6 +165,7 @@ begin
     if arr[i][1] = '+' then
       result := arr[i].Substring(1);
   end;
+}
 end;
 
 procedure Ttest.DeleteX(var A: TSArray; const Index: integer);
@@ -144,6 +183,19 @@ end;
 Procedure TTest.MixArray(arr:TSArray);
 var i,j:integer;
   s:string;
+begin
+  for i := High(arr) downto 1 do
+  begin
+    j := Random(i + 1);
+    s := arr[i];
+    arr[i] := arr[j];
+    arr[j] := s;
+  end;
+end;
+
+Procedure TTest.MixArrayInt(arr:array of integer);
+var i,j:integer;
+  s:integer;
 begin
   for i := High(arr) downto 1 do
   begin
