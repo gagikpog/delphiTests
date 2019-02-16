@@ -8,6 +8,7 @@ uses
   Vcl.ActnMan, Vcl.ActnCtrls, Vcl.ActnMenus;
 type
     TSarray = array of string;
+    TIarray = array of integer;
     TQuestionData = Record
     StrArray : TSarray;
     Question : String;
@@ -33,12 +34,14 @@ type
     Procedure ParseTest();
     function Split(const Texto, Delimitador: string): TSarray;
     procedure FormCreate(Sender: TObject);
-    function LoadLevel(index:integer):string;
+    procedure LoadLevel(index:integer);
     Procedure levelBtms(Sender: TObject);
     procedure BtnCheckClick(Sender: TObject);
     Procedure MixArray(arr:TSArray);
-    Procedure MixArrayInt(arr:array of integer);
+    Procedure MixArrayInt(arr:TIarray);
     procedure DeleteX(var A: TSArray; const Index: integer);
+    procedure RadioGroupTestExit(Sender: TObject);
+    procedure SetSelectedBtnColor();
   private
     { Private declarations }
   public
@@ -47,26 +50,21 @@ type
 
 var
   Test: TTest;
-  RightAnswer:string;
   TestsArray:TSarray;
   Data: array of TQuestionData;
+  SelectedTask:integer;
 implementation
 
 {$R *.dfm}
 
 procedure TTest.BtnCheckClick(Sender: TObject);
-var s:string;
 begin
-{
-  if RadioGroupTest.ItemIndex < 0 then
-  begin
-    MessageBox(Handle,'надо что то выбрать','title',MB_OK);
-    exit;
-  end;
-  s:= RadioGroupTest.Items[RadioGroupTest.ItemIndex];
-  if Trim(RightAnswer) = Trim(s) then
-    RightAnswer := LoadLevel(2);
-}
+   if SelectedTask < 19 then
+   begin
+      SelectedTask := SelectedTask + 1;
+      LoadLevel(SelectedTask);
+      SetSelectedBtnColor();
+   end;
 end;
 
 procedure TTest.BtnLClick(Sender: TObject);
@@ -74,28 +72,28 @@ begin
    panelLevel.Visible := false;
    RadioGroupTest.Visible := true;
    PanelHead.Visible := true;
-   Randomize;
-   RightAnswer := LoadLevel(1);
+   LoadLevel(SelectedTask);
 end;
 
 procedure TTest.FormCreate(Sender: TObject);
-var btn:TButton;
+var btn:TLabel;
   I: Integer;
 begin
   for I := 1 to 20 do
   begin
-    btn := TButton.Create(nil);
+    btn := TLabel.Create(nil);
     btn.Caption := IntToStr(i);
     btn.Height := PanelButtons.Height-2;
     btn.OnClick := levelBtms;
     btn.Parent := PanelButtons;
   end;
+  SelectedTask := 0;
+  Randomize;
   ParseTest();
 end;
 
 procedure TTest.FormResize(Sender: TObject);
 var
-  component: TComponent;
   w,l:integer;
   I: Integer;
 begin
@@ -110,62 +108,59 @@ end;
 
 Procedure TTest.levelBtms(Sender: TObject);
 begin
-  ShowMessage('load '+  (Sender as TButton).Caption+' task');
+  //ShowMessage('load '+  (Sender as TButton).Caption+' task');
+  SelectedTask := StrToInt((Sender as TLabel).Caption)-1;
+  LoadLevel(SelectedTask);
+  SetSelectedBtnColor();
 end;
 
 Procedure TTest.ParseTest();
 var
   filename:string;
   I,J: Integer;
-  Order : array of integer;
+  Order : TIarray;
   var arr:TSarray;
 begin
   filename := 'test.tdb';
   TestsArray := Split(Decode(ReadFromFile(filename),4),'/');
   Caption := TestsArray[0];
+  DeleteX(TestsArray,0);
   SetLength(Order,Length(TestsArray));
   for I := 0 to Length(TestsArray)-1 do
   begin
-    Order[i] := i+1;
+    Order[i] := i;
   end;
   MixArrayInt(Order);
   SetLength(Data,20);
-   {
+  // {
   for I := 0 to 19 do
   begin
     arr := Split(TestsArray[Order[i]],#13#10);
     Data[i].Question := arr[0];
+    Data[i].SelectedAnswer := -1;
     DeleteX(arr,0);
     MixArray(arr);
     for J := 0 to Length(arr)-1 do
     begin
       SetLength(Data[I].StrArray,J+1);
       Data[I].StrArray[J] :=  arr[J].Substring(2);
-      if arr[i][1] = '+' then
+      if arr[J][1] = '+' then
         Data[I].Answer := J;
     end;
-
-  end;   }
-
+  end;   //}
 end;
 
-function TTest.LoadLevel(index:integer):string;
-var arr:TSarray;
-  I: Integer;
+Procedure TTest.LoadLevel(index:integer);
+var  I: Integer;
 begin
-{
-  arr := Split(TestsArray[index],#13#10);
-  LabelQuestion.Caption := arr[0];
-  DeleteX(arr,0);
-  MixArray(arr);
   RadioGroupTest.Items.Clear;
-  for I := 0 to Length(arr)-1 do
+  LabelQuestion.Caption := Data[index].Question;
+  for I := 0 to Length(Data[index].StrArray) - 1 do
   begin
-    RadioGroupTest.Items.Add(arr[i].Substring(2));
-    if arr[i][1] = '+' then
-      result := arr[i].Substring(1);
+    RadioGroupTest.Items.Add(Data[index].StrArray[I]);
   end;
-}
+  if Data[index].SelectedAnswer >= 0 then
+    RadioGroupTest.ItemIndex := Data[index].SelectedAnswer;
 end;
 
 procedure Ttest.DeleteX(var A: TSArray; const Index: integer);
@@ -193,11 +188,11 @@ begin
   end;
 end;
 
-Procedure TTest.MixArrayInt(arr:array of integer);
+Procedure TTest.MixArrayInt(arr:TIarray);
 var i,j:integer;
   s:integer;
 begin
-  for i := High(arr) downto 1 do
+  for i := High(arr) downto 0 do
   begin
     j := Random(i + 1);
     s := arr[i];
@@ -214,10 +209,16 @@ Begin
   Result:=str;
 End;
 
+procedure TTest.RadioGroupTestExit(Sender: TObject);
+begin
+  //ShowMessage('asd');
+  Data[SelectedTask].SelectedAnswer := RadioGroupTest.ItemIndex;
+end;
+
 Function TTest.ReadFromFile(fileName:string):string;
 var
   myFile1 : TextFile;
-  text,res   : string;
+  text,res : string;
 begin
   AssignFile(myFile1, fileName);
 
@@ -255,6 +256,18 @@ begin
   Result[i] := Copy(Texto, PosStart, Length(Texto));
   if   Result[i] = '' then
       SetLength(Result, i);
+end;
+
+procedure TTest.SetSelectedBtnColor();
+var I:integer;
+begin
+  //asd
+  for I := 0 to PanelButtons.ControlCount - 1  do
+    if((PanelButtons.Controls[i] as Tlabel).Caption = intToStr(SelectedTask))  then
+      (PanelButtons.Controls[i] as TLabel).Color := clBlue
+    else
+       (PanelButtons.Controls[i] as Tlabel).Color := clWhite;
+
 end;
 
 end.

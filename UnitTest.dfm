@@ -36,6 +36,7 @@ object Test: TTest
       '4')
     TabOrder = 0
     Visible = False
+    OnExit = RadioGroupTestExit
   end
   object PanelLevel: TPanel
     Left = 455
