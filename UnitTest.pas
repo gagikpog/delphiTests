@@ -26,6 +26,7 @@ type
     BtnCheck: TButton;
     LabelQuestion: TLabel;
     PanelButtons: TFlowPanel;
+    btnEnding: TButton;
     procedure FormResize(Sender: TObject);
     procedure BtnLClick(Sender: TObject);
 
@@ -42,6 +43,7 @@ type
     procedure DeleteX(var A: TSArray; const Index: integer);
     procedure RadioGroupTestExit(Sender: TObject);
     procedure SetSelectedBtnColor();
+    procedure btnEndingClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,12 +69,27 @@ begin
    end;
 end;
 
+procedure TTest.btnEndingClick(Sender: TObject);
+var res:integer;
+  I: Integer;
+begin
+   res := 0;
+   for I := 0 to Length(Data)-1 do
+   begin
+     if Data[i].SelectedAnswer = Data[i].Answer then
+       res := res + 1;
+   end;
+   ShowMessage('correct '+IntToStr(res)+' out of 20');
+   Close;
+end;
+
 procedure TTest.BtnLClick(Sender: TObject);
 begin
    panelLevel.Visible := false;
    RadioGroupTest.Visible := true;
    PanelHead.Visible := true;
    LoadLevel(SelectedTask);
+   SetSelectedBtnColor();
 end;
 
 procedure TTest.FormCreate(Sender: TObject);
@@ -82,9 +99,14 @@ begin
   for I := 1 to 20 do
   begin
     btn := TLabel.Create(nil);
+    btn.AutoSize := false;
+    btn.Font.Size := 15;
+    btn.Cursor := crHandPoint;
     btn.Caption := IntToStr(i);
     btn.Height := PanelButtons.Height-2;
     btn.OnClick := levelBtms;
+    btn.Transparent := false;
+    btn.Alignment := taCenter;
     btn.Parent := PanelButtons;
   end;
   SelectedTask := 0;
@@ -102,13 +124,14 @@ begin
   w := trunc((PanelButtons.Width-50)/20);
   l := PanelButtons.Width - w*20;
   PanelButtons.Padding.Left := trunc(l/2);
-  for I := 0 to PanelButtons.ControlCount - 1  do
+  for I := 0 to PanelButtons.ControlCount - 1 do
     PanelButtons.Controls[i].Width := w;
 end;
 
 Procedure TTest.levelBtms(Sender: TObject);
 begin
   //ShowMessage('load '+  (Sender as TButton).Caption+' task');
+  RadioGroupTestExit(sender);
   SelectedTask := StrToInt((Sender as TLabel).Caption)-1;
   LoadLevel(SelectedTask);
   SetSelectedBtnColor();
@@ -211,7 +234,7 @@ End;
 
 procedure TTest.RadioGroupTestExit(Sender: TObject);
 begin
-  //ShowMessage('asd');
+ // ShowMessage('asd');
   Data[SelectedTask].SelectedAnswer := RadioGroupTest.ItemIndex;
 end;
 
@@ -261,13 +284,17 @@ end;
 procedure TTest.SetSelectedBtnColor();
 var I:integer;
 begin
-  //asd
   for I := 0 to PanelButtons.ControlCount - 1  do
-    if((PanelButtons.Controls[i] as Tlabel).Caption = intToStr(SelectedTask))  then
-      (PanelButtons.Controls[i] as TLabel).Color := clBlue
-    else
-       (PanelButtons.Controls[i] as Tlabel).Color := clWhite;
-
+  begin
+    if((PanelButtons.Controls[i] as Tlabel).Caption = intToStr(SelectedTask+1))  then
+    begin
+      (PanelButtons.Controls[i] as TLabel).Color := RGB(43,218,232);
+    end else begin
+       if Data[i].SelectedAnswer < 0 then
+         (PanelButtons.Controls[i] as Tlabel).Color := clWhite
+         else
+         (PanelButtons.Controls[i] as Tlabel).Color := RGB(21,255,205);
+    end;
+  end;
 end;
-
 end.

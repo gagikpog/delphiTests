@@ -40,7 +40,7 @@ object Test: TTest
   end
   object PanelLevel: TPanel
     Left = 455
-    Top = 228
+    Top = 225
     Width = 313
     Height = 257
     TabOrder = 1
@@ -130,6 +130,16 @@ object Test: TTest
       Align = alTop
       Padding.Bottom = 1
       TabOrder = 1
+    end
+    object btnEnding: TButton
+      Left = 574
+      Top = 79
+      Width = 105
+      Height = 31
+      Anchors = [akTop, akRight]
+      Caption = #1047#1072#1074#1077#1088#1096#1080#1090#1100
+      TabOrder = 2
+      OnClick = btnEndingClick
     end
   end
 end
