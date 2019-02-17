@@ -27,6 +27,8 @@ type
     LabelQuestion: TLabel;
     PanelButtons: TFlowPanel;
     btnEnding: TButton;
+    LabelTime: TLabel;
+    Timer1: TTimer;
     procedure FormResize(Sender: TObject);
     procedure BtnLClick(Sender: TObject);
 
@@ -44,6 +46,7 @@ type
     procedure RadioGroupTestExit(Sender: TObject);
     procedure SetSelectedBtnColor();
     procedure btnEndingClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,12 +58,14 @@ var
   TestsArray:TSarray;
   Data: array of TQuestionData;
   SelectedTask:integer;
+  timeout:integer;
 implementation
 
 {$R *.dfm}
 
 procedure TTest.BtnCheckClick(Sender: TObject);
 begin
+   RadioGroupTestExit(sender);
    if SelectedTask < 19 then
    begin
       SelectedTask := SelectedTask + 1;
@@ -73,6 +78,7 @@ procedure TTest.btnEndingClick(Sender: TObject);
 var res:integer;
   I: Integer;
 begin
+   RadioGroupTestExit(sender);
    res := 0;
    for I := 0 to Length(Data)-1 do
    begin
@@ -85,9 +91,13 @@ end;
 
 procedure TTest.BtnLClick(Sender: TObject);
 begin
+   LabelTime.Visible := true;
    panelLevel.Visible := false;
    RadioGroupTest.Visible := true;
    PanelHead.Visible := true;
+   timeout := 300;
+   Timer1Timer(nil);
+   timer1.Enabled := true;
    LoadLevel(SelectedTask);
    SetSelectedBtnColor();
 end;
@@ -130,7 +140,6 @@ end;
 
 Procedure TTest.levelBtms(Sender: TObject);
 begin
-  //ShowMessage('load '+  (Sender as TButton).Caption+' task');
   RadioGroupTestExit(sender);
   SelectedTask := StrToInt((Sender as TLabel).Caption)-1;
   LoadLevel(SelectedTask);
@@ -155,7 +164,6 @@ begin
   end;
   MixArrayInt(Order);
   SetLength(Data,20);
-  // {
   for I := 0 to 19 do
   begin
     arr := Split(TestsArray[Order[i]],#13#10);
@@ -170,7 +178,7 @@ begin
       if arr[J][1] = '+' then
         Data[I].Answer := J;
     end;
-  end;   //}
+  end;
 end;
 
 Procedure TTest.LoadLevel(index:integer);
@@ -234,7 +242,6 @@ End;
 
 procedure TTest.RadioGroupTestExit(Sender: TObject);
 begin
- // ShowMessage('asd');
   Data[SelectedTask].SelectedAnswer := RadioGroupTest.ItemIndex;
 end;
 
@@ -281,6 +288,19 @@ begin
       SetLength(Result, i);
 end;
 
+procedure TTest.Timer1Timer(Sender: TObject);
+var seconds,minutes:integer;
+begin
+    timeout := timeout-1;
+    seconds := timeout mod 60;
+    minutes := timeout div 60;
+    labelTime.Caption := intToStr(minutes) + ':' + intToStr(seconds);
+    if timeout <= 0 then
+    begin
+       btnEndingClick(nil);
+    end;
+end;
+
 procedure TTest.SetSelectedBtnColor();
 var I:integer;
 begin
@@ -290,10 +310,10 @@ begin
     begin
       (PanelButtons.Controls[i] as TLabel).Color := RGB(43,218,232);
     end else begin
-       if Data[i].SelectedAnswer < 0 then
-         (PanelButtons.Controls[i] as Tlabel).Color := clWhite
-         else
-         (PanelButtons.Controls[i] as Tlabel).Color := RGB(21,255,205);
+      if Data[i].SelectedAnswer < 0 then
+        (PanelButtons.Controls[i] as Tlabel).Color := clWhite
+      else
+        (PanelButtons.Controls[i] as Tlabel).Color := RGB(21,255,205);
     end;
   end;
 end;

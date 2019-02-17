@@ -16,8 +16,20 @@ object Test: TTest
   Position = poMainFormCenter
   OnCreate = FormCreate
   OnResize = FormResize
+  DesignSize = (
+    784
+    490)
   PixelsPerInch = 96
   TextHeight = 18
+  object LabelTime: TLabel
+    Left = 734
+    Top = 464
+    Width = 33
+    Height = 18
+    Anchors = [akRight, akBottom]
+    Caption = 'Time'
+    Visible = False
+  end
   object RadioGroupTest: TRadioGroup
     AlignWithMargins = True
     Left = 50
@@ -36,10 +48,9 @@ object Test: TTest
       '4')
     TabOrder = 0
     Visible = False
-    OnExit = RadioGroupTestExit
   end
   object PanelLevel: TPanel
-    Left = 455
+    Left = 159
     Top = 225
     Width = 313
     Height = 257
@@ -141,5 +152,11 @@ object Test: TTest
       TabOrder = 2
       OnClick = btnEndingClick
     end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 16
+    Top = 8
   end
 end
