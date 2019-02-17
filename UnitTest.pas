@@ -5,16 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ToolWin,
-  Vcl.ActnMan, Vcl.ActnCtrls, Vcl.ActnMenus;
-type
-    TSarray = array of string;
-    TIarray = array of integer;
-    TQuestionData = Record
-    StrArray : TSarray;
-    Question : String;
-    SelectedAnswer: integer;
-    Answer: integer;
-  end;
+  Vcl.ActnMan, Vcl.ActnCtrls, Vcl.ActnMenus,UnitUtility;
 type
   TTest = class(TForm)
     BtnL1: TButton;
@@ -31,18 +22,11 @@ type
     Timer1: TTimer;
     procedure FormResize(Sender: TObject);
     procedure BtnLClick(Sender: TObject);
-
-    Function Decode(str: string; Code:Integer): string;
-    Function ReadFromFile(fileName:string):string;
     Procedure ParseTest();
-    function Split(const Texto, Delimitador: string): TSarray;
     procedure FormCreate(Sender: TObject);
     procedure LoadLevel(index:integer);
     Procedure levelBtms(Sender: TObject);
     procedure BtnCheckClick(Sender: TObject);
-    Procedure MixArray(arr:TSArray);
-    Procedure MixArrayInt(arr:TIarray);
-    procedure DeleteX(var A: TSArray; const Index: integer);
     procedure RadioGroupTestExit(Sender: TObject);
     procedure SetSelectedBtnColor();
     procedure btnEndingClick(Sender: TObject);
@@ -194,98 +178,9 @@ begin
     RadioGroupTest.ItemIndex := Data[index].SelectedAnswer;
 end;
 
-procedure Ttest.DeleteX(var A: TSArray; const Index: integer);
-var
-  ALength,i: integer;
-begin
-  ALength := Length(A);
-  Assert(ALength > 0);
-  Assert(Index < ALength);
-  for i := Index + 1 to ALength - 1 do
-    A[i - 1] := A[i];
-  SetLength(A, ALength - 1);
-end;
-
-Procedure TTest.MixArray(arr:TSArray);
-var i,j:integer;
-  s:string;
-begin
-  for i := High(arr) downto 1 do
-  begin
-    j := Random(i + 1);
-    s := arr[i];
-    arr[i] := arr[j];
-    arr[j] := s;
-  end;
-end;
-
-Procedure TTest.MixArrayInt(arr:TIarray);
-var i,j:integer;
-  s:integer;
-begin
-  for i := High(arr) downto 0 do
-  begin
-    j := Random(i + 1);
-    s := arr[i];
-    arr[i] := arr[j];
-    arr[j] := s;
-  end;
-end;
-
-Function TTest.Decode(str: string; Code:Integer): string;
-Var t: Integer;
-Begin
-  For t:=1 to Length(str) Do
-    str[t]:= Chr(Ord(str[t]) xor Code);
-  Result:=str;
-End;
-
 procedure TTest.RadioGroupTestExit(Sender: TObject);
 begin
   Data[SelectedTask].SelectedAnswer := RadioGroupTest.ItemIndex;
-end;
-
-Function TTest.ReadFromFile(fileName:string):string;
-var
-  myFile1 : TextFile;
-  text,res : string;
-begin
-  AssignFile(myFile1, fileName);
-
-  Reset(myFile1);
-
-  while not Eof(myFile1) do
-  begin
-    ReadLn(myFile1, text);
-    res := res + text;
-  end;
-  CloseFile(myFile1);
-  Result := res;
-end;
-
-function TTest.Split(const Texto, Delimitador: string): TSarray;
-var
-  i: integer;
-  Len: integer;
-  PosStart: integer;
-  PosDel: integer;
-begin
-  i := 0;
-  SetLength(Result, 1);
-  Len := Length(Delimitador);
-  PosStart := 1;
-  PosDel := Pos(Delimitador, Texto);
-  while PosDel > 0 do
-    begin
-      Result[i] := Copy(Texto, PosStart, PosDel - PosStart);
-      PosStart := PosDel + Len;
-      PosDel := Pos(Delimitador, Texto, PosStart);
-      inc(i);
-      SetLength(Result, i + 1);
-    end;
-  Result[i] := Copy(Texto, PosStart, Length(Texto));
-  if   Result[i] = '' then
-      SetLength(Result, i);
 end;
 
 procedure TTest.Timer1Timer(Sender: TObject);
