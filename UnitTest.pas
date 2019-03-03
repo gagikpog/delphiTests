@@ -62,6 +62,7 @@ procedure TTest.btnEndingClick(Sender: TObject);
 var res:integer;
   I: Integer;
 begin
+   timer1.Enabled := false;
    RadioGroupTestExit(sender);
    res := 0;
    for I := 0 to Length(Data)-1 do
@@ -79,7 +80,7 @@ begin
    panelLevel.Visible := false;
    RadioGroupTest.Visible := true;
    PanelHead.Visible := true;
-   timeout := 300;
+   timeout := (sender as TButton).Tag;
    Timer1Timer(nil);
    timer1.Enabled := true;
    LoadLevel(SelectedTask);
@@ -185,13 +186,18 @@ end;
 
 procedure TTest.Timer1Timer(Sender: TObject);
 var seconds,minutes:integer;
+s:string;
 begin
     timeout := timeout-1;
     seconds := timeout mod 60;
     minutes := timeout div 60;
-    labelTime.Caption := intToStr(minutes) + ':' + intToStr(seconds);
+    if seconds > 9 then
+      s := ''
+    else s := '0';
+    labelTime.Caption := intToStr(minutes) + ':'+ s + intToStr(seconds);
     if timeout <= 0 then
     begin
+       timer1.Enabled := false;
        btnEndingClick(nil);
     end;
 end;

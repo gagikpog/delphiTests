@@ -18,6 +18,7 @@ type
     LabelInfoNone: TLabel;
     procedure ButtonRegistrationClick(Sender: TObject);
     procedure ButtonEnterClick(Sender: TObject);
+    procedure EditPasswordKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -62,6 +63,26 @@ begin
   FormRegistered.ShowModal;
   ADODataSetUserTable.Active := false;
   ADODataSetUserTable.Active := true;
+end;
+
+procedure TFormAutor.EditPasswordKeyPress(Sender: TObject; var Key: Char);
+begin
+    if key = #13 then
+    begin
+      if editLogin.Text = '' then
+      begin
+        EditLogin.SetFocus;
+        exit;
+      end;
+      if EditPassword.Text = '' then
+      begin
+        EditPassword.SetFocus;
+        exit;
+      end;
+       ButtonEnterClick(nil);
+       exit;
+    end;
+    LabelInfoNone.Caption := '';
 end;
 
 end.

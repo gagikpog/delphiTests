@@ -5,7 +5,7 @@ object FormAutor: TFormAutor
   BorderStyle = bsSingle
   Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
   ClientHeight = 139
-  ClientWidth = 255
+  ClientWidth = 304
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,32 +17,34 @@ object FormAutor: TFormAutor
   PixelsPerInch = 96
   TextHeight = 18
   object LabelInfoNone: TLabel
-    Left = 24
-    Top = 88
+    Left = 40
+    Top = 83
     Width = 5
     Height = 18
   end
   object EditLogin: TEdit
     Left = 8
-    Top = 24
-    Width = 241
+    Top = 16
+    Width = 289
     Height = 26
     TabOrder = 0
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#1083#1086#1075#1080#1085
+    OnKeyPress = EditPasswordKeyPress
   end
   object EditPassword: TEdit
     Left = 8
     Top = 51
-    Width = 241
+    Width = 289
     Height = 26
     PasswordChar = '*'
     TabOrder = 1
     TextHint = #1042#1074#1077#1076#1080#1090#1077' '#1087#1072#1088#1086#1083#1100
+    OnKeyPress = EditPasswordKeyPress
   end
   object ButtonEnter: TButton
-    Left = 174
-    Top = 78
-    Width = 75
+    Left = 207
+    Top = 106
+    Width = 90
     Height = 25
     Caption = #1042#1093#1086#1076
     TabOrder = 2
@@ -51,7 +53,7 @@ object FormAutor: TFormAutor
   object ButtonRegistration: TButton
     Left = 8
     Top = 107
-    Width = 241
+    Width = 185
     Height = 25
     Caption = #1056#1077#1075#1080#1089#1090#1088#1072#1094#1080#1103
     TabOrder = 3
@@ -66,6 +68,7 @@ object FormAutor: TFormAutor
     Mode = cmShareDenyNone
     Provider = 'Microsoft.Jet.OLEDB.4.0'
     Left = 56
+    Top = 8
   end
   object ADODataSetUserTable: TADODataSet
     Active = True

@@ -50,12 +50,13 @@ object Test: TTest
     Visible = False
   end
   object PanelLevel: TPanel
-    Left = 159
-    Top = 225
+    Left = 454
+    Top = 201
     Width = 313
     Height = 257
     TabOrder = 1
     object BtnL1: TButton
+      Tag = 300
       Left = 72
       Top = 48
       Width = 169
@@ -65,6 +66,7 @@ object Test: TTest
       OnClick = BtnLClick
     end
     object BtnL2: TButton
+      Tag = 480
       Left = 72
       Top = 106
       Width = 169
@@ -74,6 +76,7 @@ object Test: TTest
       OnClick = BtnLClick
     end
     object BtnL3: TButton
+      Tag = 600
       Left = 72
       Top = 168
       Width = 169
