@@ -1,7 +1,7 @@
-Win32/
 __history/
 __recovery/
 *.stat
 *.identcache
 *.local
 *.vlb
+*.dcu
