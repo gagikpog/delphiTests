@@ -111,10 +111,6 @@
             <Form>Form2</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UnitTest2.pas">
-            <Form>Form3</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="UnitTestAdd.pas">
             <Form>Form4</Form>
             <FormType>dfm</FormType>

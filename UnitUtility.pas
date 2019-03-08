@@ -1,14 +1,16 @@
 unit UnitUtility;
 
 interface
+uses System.SysUtils, StrUtils;
 type
   TSarray = array of string;
   TIarray = array of integer;
   TQuestionData = Record
-    StrArray : TSarray;
+    DataType : String;
     Question : String;
-    SelectedAnswer: integer;
-    Answer: integer;
+    StrArray : TSarray;
+    SelectedAnswer: String;
+    Answer: String;
   end;
 
   procedure DeleteX(var A: TSArray; const Index: integer);
@@ -17,6 +19,10 @@ type
   function Split(const Texto, Delimitador: string): TSarray;
   Function Decode(str: string; Code:Integer): string;
   Function ReadFromFile(fileName:string):string;
+  Function ParseS(str:String):TQuestionData;
+  Function ParseM(str:String):TQuestionData;
+  Function ParseI(str:String):TQuestionData;
+  Function ParseO(str:String):TQuestionData;
 
 implementation
 
@@ -105,6 +111,96 @@ begin
   end;
   CloseFile(myFile1);
   Result := res;
+end;
+////////////////////////////
+///tasks parse fonctions
+Function ParseS(str:String):TQuestionData;
+  var arr:TSarray;
+  res:TQuestionData;
+  J:integer;
+begin
+   arr := Split(str,#13#10);
+   res.DataType := 'S';
+   res.Question := arr[0].Substring(1);
+   res.SelectedAnswer := '';
+   DeleteX(arr,0);
+   MixArray(arr);
+   for J := 0 to Length(arr)-1 do
+   begin
+     SetLength(res.StrArray,J+1);
+     res.StrArray[J] :=  arr[J].SubString(2);
+     if arr[J][1] = '+' then
+       res.Answer := IntToStr(J);
+   end;
+   result := res;
+end;
+
+Function ParseM(str:String):TQuestionData;
+  var arr:TSarray;
+  res:TQuestionData;
+  J:integer;
+begin
+   str := Trim(str);
+   arr := Split(str,#13#10);
+   res.DataType := 'M';
+   res.Question := arr[0].Substring(1);
+   res.SelectedAnswer := '';
+   DeleteX(arr,0);
+   MixArray(arr);
+   res.Answer := '';
+   for J := 0 to Length(arr)-1 do
+   begin
+     SetLength(res.StrArray,J+1);
+     res.StrArray[J] :=  arr[J].SubString(2);
+     if arr[J][1] = '+' then
+       res.Answer := res.Answer + '|' +IntToStr(J);
+   end;
+   result := res;
+end;
+
+Function ParseI(str:String):TQuestionData;
+  var arr,arr1,arr2:TSarray;
+  res:TQuestionData;
+  J:integer;
+  I,n: Integer;
+
+begin
+   arr := Split(str,#13#10);
+   res.DataType := 'I';
+   res.Question := arr[0].Substring(1);
+   res.SelectedAnswer := '';
+   //AnsiReplaceStr(строка, ' ', '');
+   res.Answer := AnsiReplaceStr(LowerCase(arr[1]),' ','');
+   arr[1] := Trim(arr[1]);
+   if arr[1][1] = '[' then
+      SetLength(res.StrArray,length(res.StrArray)+1);
+   arr1 := Split(arr[1],'[');
+   for I := 0 to length(arr1) - 1 do
+   begin
+      arr2 := Split(arr1[i],']');
+      n := Length(arr2);
+      for j := 0 to n - 1 do
+      begin
+        SetLength(res.StrArray,length(res.StrArray)+1);
+        res.StrArray[length(res.StrArray)-1] := arr2[j];
+      end;
+   end;
+   result := res;
+end;
+
+Function ParseO(str:String):TQuestionData;
+  var arr:TSarray;
+  res:TQuestionData;
+  J:integer;
+begin
+   arr := Split(str,#13#10);
+   res.DataType := 'O';
+   res.Question := arr[0].Substring(1);
+   res.SelectedAnswer := '';
+   res.Answer := arr[1];
+   res.StrArray := Split(arr[1],' ');
+   MixArray(res.StrArray);
+   result := res;
 end;
 
 end.

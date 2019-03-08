@@ -20,6 +20,13 @@ type
     btnEnding: TButton;
     LabelTime: TLabel;
     Timer1: TTimer;
+    PanelBody: TPanel;
+    PanelMulty: TFlowPanel;
+    PanelInp: TPanel;
+    FlowPanelInp: TFlowPanel;
+    PanelMove: TPanel;
+    FlowPanelUp: TFlowPanel;
+    FlowPanelDown: TFlowPanel;
     procedure FormResize(Sender: TObject);
     procedure BtnLClick(Sender: TObject);
     Procedure ParseTest();
@@ -31,6 +38,11 @@ type
     procedure SetSelectedBtnColor();
     procedure btnEndingClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure LoadS(dat:TQuestionData);
+    procedure LoadM(dat:TQuestionData);
+    procedure LoadI(dat:TQuestionData);
+    procedure LoadO(dat:TQuestionData);
+    procedure MoveButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,7 +54,8 @@ var
   TestsArray:TSarray;
   Data: array of TQuestionData;
   SelectedTask:integer;
-  timeout:integer;
+  Timeout:integer;
+  TasksCount:integer;
 implementation
 
 {$R *.dfm}
@@ -78,7 +91,7 @@ procedure TTest.BtnLClick(Sender: TObject);
 begin
    LabelTime.Visible := true;
    panelLevel.Visible := false;
-   RadioGroupTest.Visible := true;
+   PanelBody.Visible := true;
    PanelHead.Visible := true;
    timeout := (sender as TButton).Tag;
    Timer1Timer(nil);
@@ -91,7 +104,8 @@ procedure TTest.FormCreate(Sender: TObject);
 var btn:TLabel;
   I: Integer;
 begin
-  for I := 1 to 20 do
+  TasksCount := 20;
+  for I := 1 to TasksCount do
   begin
     btn := TLabel.Create(nil);
     btn.AutoSize := false;
@@ -104,6 +118,10 @@ begin
     btn.Alignment := taCenter;
     btn.Parent := PanelButtons;
   end;
+  PanelMulty.Align := alClient;
+  RadioGroupTest.Align := alClient;
+  PanelInp.Align := alClient;
+  PanelMove.Align := alClient;
   SelectedTask := 0;
   Randomize;
   ParseTest();
@@ -134,9 +152,8 @@ end;
 Procedure TTest.ParseTest();
 var
   filename:string;
-  I,J: Integer;
+  I: Integer;
   Order : TIarray;
-  var arr:TSarray;
 begin
   filename := 'test.tdb';
   TestsArray := Split(Decode(ReadFromFile(filename),4),'/');
@@ -148,40 +165,33 @@ begin
     Order[i] := i;
   end;
   MixArrayInt(Order);
-  SetLength(Data,20);
-  for I := 0 to 19 do
+  SetLength(Data,TasksCount);
+  for I := 0 to TasksCount - 1 do
   begin
-    arr := Split(TestsArray[Order[i]],#13#10);
-    Data[i].Question := arr[0];
-    Data[i].SelectedAnswer := -1;
-    DeleteX(arr,0);
-    MixArray(arr);
-    for J := 0 to Length(arr)-1 do
-    begin
-      SetLength(Data[I].StrArray,J+1);
-      Data[I].StrArray[J] :=  arr[J].Substring(2);
-      if arr[J][1] = '+' then
-        Data[I].Answer := J;
+    if(TestsArray[Order[i]].Length = 0)then
+      continue;
+    case TestsArray[Order[i]][1] of
+      'S': Data[I] := ParseS(TestsArray[Order[i]]);
+      'M': Data[I] := ParseM(TestsArray[Order[i]]);
+      'I': Data[I] := ParseI(TestsArray[Order[i]]);
+      'O': Data[I] := ParseO(TestsArray[Order[i]]);
     end;
   end;
 end;
 
 Procedure TTest.LoadLevel(index:integer);
-var  I: Integer;
 begin
-  RadioGroupTest.Items.Clear;
-  LabelQuestion.Caption := Data[index].Question;
-  for I := 0 to Length(Data[index].StrArray) - 1 do
-  begin
-    RadioGroupTest.Items.Add(Data[index].StrArray[I]);
+  case Data[index].DataType[1] of
+    'S': LoadS(Data[index]);
+    'M': LoadM(Data[index]);
+    'I': LoadI(Data[index]);
+    'O': LoadO(Data[index]);
   end;
-  if Data[index].SelectedAnswer >= 0 then
-    RadioGroupTest.ItemIndex := Data[index].SelectedAnswer;
 end;
 
 procedure TTest.RadioGroupTestExit(Sender: TObject);
 begin
-  Data[SelectedTask].SelectedAnswer := RadioGroupTest.ItemIndex;
+//  Data[SelectedTask].SelectedAnswer := RadioGroupTest.ItemIndex;
 end;
 
 procedure TTest.Timer1Timer(Sender: TObject);
@@ -211,11 +221,125 @@ begin
     begin
       (PanelButtons.Controls[i] as TLabel).Color := RGB(43,218,232);
     end else begin
-      if Data[i].SelectedAnswer < 0 then
+      if Data[i].SelectedAnswer = '' then
         (PanelButtons.Controls[i] as Tlabel).Color := clWhite
       else
         (PanelButtons.Controls[i] as Tlabel).Color := RGB(21,255,205);
     end;
   end;
 end;
+
+//////////////////
+///
+procedure TTest.LoadS (dat:TQuestionData);
+var i:integer;
+begin
+  RadioGroupTest.Visible := true;
+  PanelInp.Visible := false;
+  PanelMove.Visible := false;
+  PanelMulty.Visible := false;
+
+  RadioGroupTest.Items.Clear;
+  LabelQuestion.Caption := Dat.Question;
+  for I := 0 to Length(Dat.StrArray) - 1 do
+  begin
+    RadioGroupTest.Items.Add(Dat.StrArray[I]);
+  end;
+//  if Data[index].SelectedAnswer <> '' then
+ //   RadioGroupTest.ItemIndex := Data[index].SelectedAnswer;
+end;
+
+procedure TTest.LoadM(dat:TQuestionData);
+var
+cb:TCheckBox;
+  I: Integer;
+begin
+  RadioGroupTest.Visible := false;
+  PanelInp.Visible := false;
+  PanelMove.Visible := false;
+  PanelMulty.Visible := true;
+
+  for I := PanelMulty.ControlCount - 1 downto 0 do
+    PanelMulty.Controls[i].Free;
+  LabelQuestion.Caption := Dat.Question;
+  for I := 0 to length(dat.StrArray) - 1 do
+  begin
+    cb := TCheckBox.Create(nil);
+    cb.Caption := dat.StrArray[i];
+    cb.AlignWithMargins := true;
+    cb.Margins.Top := 20;
+    cb.Margins.Left := 50;
+    cb.Margins.Right := 500;
+    cb.Margins.Bottom := 20;
+    cb.Height := 30;
+    cb.Parent := PanelMulty;
+//    cb.Checked
+  end;
+
+end;
+
+procedure TTest.LoadI(dat:TQuestionData);
+var
+  I: Integer;
+  lbl:TLabel;
+  edi:TEdit;
+begin
+  RadioGroupTest.Visible := false;
+  PanelMulty.Visible := false;
+  PanelMove.Visible := false;
+  PanelInp.Visible := true;
+  LabelQuestion.Caption := Dat.Question;
+
+  for I := FlowPanelInp.ControlCount - 1 downto 0 do
+    FlowPanelInp.Controls[i].Free;
+  I := 0;
+  while i < length(dat.StrArray) do
+  begin
+    lbl := TLabel.Create(nil);
+    lbl.Caption := dat.StrArray[i];
+    lbl.Parent := FlowPanelInp;
+    if i + 1 < length(dat.StrArray) then
+    begin
+      edi := TEdit.Create(nil);
+      edi.Parent := FlowPanelInp;
+    end;
+    i := i + 2;
+  end;
+end;
+
+procedure TTest.LoadO(dat:TQuestionData);
+var btn:Tbutton;
+  I: Integer;
+begin
+  RadioGroupTest.Visible := false;
+  PanelMulty.Visible := false;
+  PanelInp.Visible := false;
+  PanelMove.Visible := true;
+  LabelQuestion.Caption := Dat.Question;
+
+  for I := FlowPanelDown.ControlCount - 1 downto 0 do
+    FlowPanelDown.Controls[i].Free;
+  for I := FlowPanelUp.ControlCount - 1 downto 0 do
+    FlowPanelUp.Controls[i].Free;
+
+  for I := 0 to length(dat.StrArray) - 1 do
+  begin
+    btn := TButton.Create(nil);
+    btn.Caption := dat.StrArray[i];
+    btn.Width := length(btn.Caption)*15;
+    btn.OnClick := MoveButtonClick;
+    btn.Parent := FlowPanelDown;
+  end;
+
+
+end;
+
+procedure TTest.MoveButtonClick(Sender: TObject);
+begin
+  if(sender as TButton).Parent = FlowPanelUp then
+    (sender as TButton).Parent := FlowPanelDown
+  else
+      (sender as TButton).Parent := FlowPanelUp;
+end;
+
 end.

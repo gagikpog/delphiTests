@@ -2,8 +2,8 @@ object Form2: TForm2
   Left = 0
   Top = 0
   Caption = 'Form2'
-  ClientHeight = 299
-  ClientWidth = 635
+  ClientHeight = 300
+  ClientWidth = 641
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object Form2: TForm2
   object Label1: TLabel
     Left = 25
     Top = 24
-    Width = 465
-    Height = 25
+    Width = 31
+    Height = 13
     Caption = 'Label1'
   end
   object FlowPanel1: TFlowPanel
