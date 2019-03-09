@@ -44,7 +44,6 @@ object Test: TTest
     Align = alTop
     TabOrder = 1
     Visible = False
-    ExplicitWidth = 684
     DesignSize = (
       876
       122)
@@ -82,7 +81,6 @@ object Test: TTest
       Caption = #1044#1072#1083#1077#1077
       TabOrder = 0
       OnClick = BtnCheckClick
-      ExplicitLeft = 574
     end
     object PanelButtons: TFlowPanel
       Left = 1
@@ -92,7 +90,6 @@ object Test: TTest
       Align = alTop
       Padding.Bottom = 1
       TabOrder = 1
-      ExplicitWidth = 682
     end
     object btnEnding: TButton
       Left = 766
@@ -103,7 +100,6 @@ object Test: TTest
       Caption = #1047#1072#1074#1077#1088#1096#1080#1090#1100
       TabOrder = 2
       OnClick = btnEndingClick
-      ExplicitLeft = 574
     end
   end
   object PanelBody: TPanel
@@ -119,10 +115,6 @@ object Test: TTest
     Align = alClient
     TabOrder = 2
     Visible = False
-    ExplicitLeft = 19
-    ExplicitTop = 216
-    ExplicitWidth = 337
-    ExplicitHeight = 249
     object RadioGroupTest: TRadioGroup
       Left = 1
       Top = 0
@@ -132,18 +124,13 @@ object Test: TTest
       Margins.Top = 0
       Margins.Right = 50
       Margins.Bottom = 50
-      Items.Strings = (
-        '1'
-        '2'
-        '3'
-        '4')
       TabOrder = 0
       Visible = False
     end
     object PanelMulty: TFlowPanel
       Left = 120
       Top = 3
-      Width = 161
+      Width = 129
       Height = 142
       TabOrder = 1
       Visible = False
@@ -151,7 +138,7 @@ object Test: TTest
     object PanelInp: TPanel
       Left = 1
       Top = 239
-      Width = 345
+      Width = 296
       Height = 150
       TabOrder = 2
       Visible = False
@@ -159,12 +146,12 @@ object Test: TTest
         AlignWithMargins = True
         Left = 4
         Top = 101
-        Width = 337
+        Width = 288
         Height = 41
         Margins.Top = 100
         Align = alTop
         TabOrder = 0
-        ExplicitTop = 77
+        ExplicitWidth = 337
       end
     end
     object PanelMove: TPanel
@@ -200,7 +187,7 @@ object Test: TTest
   object PanelLevel: TPanel
     Left = 437
     Top = 382
-    Width = 313
+    Width = 317
     Height = 257
     TabOrder = 0
     object BtnL1: TButton

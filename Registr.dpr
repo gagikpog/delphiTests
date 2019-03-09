@@ -6,8 +6,6 @@ uses
   UnitRegistered in 'UnitRegistered.pas' {FormRegistered},
   UnitProgramm in 'UnitProgramm.pas' {FormProgramm},
   UnitTest in 'UnitTest.pas' {Test},
-  UnitTestMove in 'UnitTestMove.pas' {Form2},
-  UnitTestAdd in 'UnitTestAdd.pas' {Form4},
   UnitUtility in 'UnitUtility.pas';
 
 {$R *.res}
@@ -18,8 +16,5 @@ begin
   Application.CreateForm(TFormProgramm, FormProgramm);
   Application.CreateForm(TFormAutor, FormAutor);
   Application.CreateForm(TFormRegistered, FormRegistered);
-  //Application.CreateForm(TTest, Test);
-  Application.CreateForm(TForm2, Form2);
-  Application.CreateForm(TForm4, Form4);
   Application.Run;
 end.

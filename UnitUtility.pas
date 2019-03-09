@@ -153,7 +153,7 @@ begin
      SetLength(res.StrArray,J+1);
      res.StrArray[J] :=  arr[J].SubString(2);
      if arr[J][1] = '+' then
-       res.Answer := res.Answer + '|' +IntToStr(J);
+       res.Answer := res.Answer +IntToStr(J) + '|';
    end;
    result := res;
 end;
@@ -169,8 +169,6 @@ begin
    res.DataType := 'I';
    res.Question := arr[0].Substring(1);
    res.SelectedAnswer := '';
-   //AnsiReplaceStr(строка, ' ', '');
-   res.Answer := AnsiReplaceStr(LowerCase(arr[1]),' ','');
    arr[1] := Trim(arr[1]);
    if arr[1][1] = '[' then
       SetLength(res.StrArray,length(res.StrArray)+1);
@@ -185,6 +183,12 @@ begin
         res.StrArray[length(res.StrArray)-1] := arr2[j];
       end;
    end;
+   i := 1;
+   while i < Length(res.StrArray) do
+   begin
+      res.Answer := res.Answer + res.StrArray[i] + '|';
+      i := i + 2;
+   end;
    result := res;
 end;
 
@@ -197,7 +201,7 @@ begin
    res.DataType := 'O';
    res.Question := arr[0].Substring(1);
    res.SelectedAnswer := '';
-   res.Answer := arr[1];
+   res.Answer := Trim(arr[1]);
    res.StrArray := Split(arr[1],' ');
    MixArray(res.StrArray);
    result := res;

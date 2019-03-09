@@ -34,7 +34,6 @@ type
     procedure LoadLevel(index:integer);
     Procedure levelBtms(Sender: TObject);
     procedure BtnCheckClick(Sender: TObject);
-    procedure RadioGroupTestExit(Sender: TObject);
     procedure SetSelectedBtnColor();
     procedure btnEndingClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -43,6 +42,7 @@ type
     procedure LoadI(dat:TQuestionData);
     procedure LoadO(dat:TQuestionData);
     procedure MoveButtonClick(Sender: TObject);
+    procedure SaveTask();
   private
     { Private declarations }
   public
@@ -62,8 +62,8 @@ implementation
 
 procedure TTest.BtnCheckClick(Sender: TObject);
 begin
-   RadioGroupTestExit(sender);
-   if SelectedTask < 19 then
+   SaveTask();
+   if SelectedTask < TasksCount - 1 then
    begin
       SelectedTask := SelectedTask + 1;
       LoadLevel(SelectedTask);
@@ -76,14 +76,14 @@ var res:integer;
   I: Integer;
 begin
    timer1.Enabled := false;
-   RadioGroupTestExit(sender);
+   SaveTask();
    res := 0;
    for I := 0 to Length(Data)-1 do
    begin
-     if Data[i].SelectedAnswer = Data[i].Answer then
+     if AnsiLowerCase(Data[i].SelectedAnswer) = AnsiLowerCase(Data[i].Answer) then
        res := res + 1;
    end;
-   ShowMessage('correct '+IntToStr(res)+' out of 20');
+   ShowMessage('correct '+IntToStr(res)+' out of ' + IntToStr(TasksCount));
    Close;
 end;
 
@@ -104,7 +104,10 @@ procedure TTest.FormCreate(Sender: TObject);
 var btn:TLabel;
   I: Integer;
 begin
-  TasksCount := 20;
+  TasksCount := 10;
+  SelectedTask := 0;
+  Randomize;
+  ParseTest();
   for I := 1 to TasksCount do
   begin
     btn := TLabel.Create(nil);
@@ -122,9 +125,7 @@ begin
   RadioGroupTest.Align := alClient;
   PanelInp.Align := alClient;
   PanelMove.Align := alClient;
-  SelectedTask := 0;
-  Randomize;
-  ParseTest();
+
 end;
 
 procedure TTest.FormResize(Sender: TObject);
@@ -134,8 +135,8 @@ var
 begin
   panelLevel.Left := trunc((width - panelLevel.Width-15)/2);
   panelLevel.top := trunc((height - panelLevel.height-40)/2);
-  w := trunc((PanelButtons.Width-50)/20);
-  l := PanelButtons.Width - w*20;
+  w := trunc((PanelButtons.Width-50)/TasksCount);
+  l := PanelButtons.Width - w*TasksCount;
   PanelButtons.Padding.Left := trunc(l/2);
   for I := 0 to PanelButtons.ControlCount - 1 do
     PanelButtons.Controls[i].Width := w;
@@ -143,7 +144,7 @@ end;
 
 Procedure TTest.levelBtms(Sender: TObject);
 begin
-  RadioGroupTestExit(sender);
+  SaveTask();
   SelectedTask := StrToInt((Sender as TLabel).Caption)-1;
   LoadLevel(SelectedTask);
   SetSelectedBtnColor();
@@ -154,12 +155,17 @@ var
   filename:string;
   I: Integer;
   Order : TIarray;
+  str:string;
 begin
   filename := 'test.tdb';
   TestsArray := Split(Decode(ReadFromFile(filename),4),'/');
-  Caption := TestsArray[0];
+  Caption := Split(TestsArray[0],#13#10)[0];
+  TasksCount := StrToInt(trim(Split(TestsArray[0],':')[1]));
   DeleteX(TestsArray,0);
   SetLength(Order,Length(TestsArray));
+  if(TasksCount >= Length(TestsArray))then
+      TasksCount := Length(TestsArray);
+
   for I := 0 to Length(TestsArray)-1 do
   begin
     Order[i] := i;
@@ -187,11 +193,6 @@ begin
     'I': LoadI(Data[index]);
     'O': LoadO(Data[index]);
   end;
-end;
-
-procedure TTest.RadioGroupTestExit(Sender: TObject);
-begin
-//  Data[SelectedTask].SelectedAnswer := RadioGroupTest.ItemIndex;
 end;
 
 procedure TTest.Timer1Timer(Sender: TObject);
@@ -245,22 +246,29 @@ begin
   begin
     RadioGroupTest.Items.Add(Dat.StrArray[I]);
   end;
-//  if Data[index].SelectedAnswer <> '' then
- //   RadioGroupTest.ItemIndex := Data[index].SelectedAnswer;
+  if dat.SelectedAnswer <> '' then
+    RadioGroupTest.ItemIndex := strToInt(dat.SelectedAnswer);
 end;
 
 procedure TTest.LoadM(dat:TQuestionData);
 var
 cb:TCheckBox;
-  I: Integer;
+  I,J: Integer;
+  AnsArr : TSarray;
 begin
   RadioGroupTest.Visible := false;
   PanelInp.Visible := false;
   PanelMove.Visible := false;
   PanelMulty.Visible := true;
-
   for I := PanelMulty.ControlCount - 1 downto 0 do
     PanelMulty.Controls[i].Free;
+  j := 0;
+  AnsArr := Split(dat.SelectedAnswer,'|');
+  if(length(ansarr) = 0) then
+  begin
+    SetLength(AnsArr,1);
+    AnsArr[0] := 'empty';
+  end;
   LabelQuestion.Caption := Dat.Question;
   for I := 0 to length(dat.StrArray) - 1 do
   begin
@@ -273,16 +281,20 @@ begin
     cb.Margins.Bottom := 20;
     cb.Height := 30;
     cb.Parent := PanelMulty;
-//    cb.Checked
+    if AnsArr[j] = IntToStr(i) then
+    begin
+      cb.Checked := true;
+      j := j + 1;
+    end;
   end;
-
 end;
 
 procedure TTest.LoadI(dat:TQuestionData);
 var
-  I: Integer;
+  I,j: Integer;
   lbl:TLabel;
   edi:TEdit;
+  AnsArr : TSarray;
 begin
   RadioGroupTest.Visible := false;
   PanelMulty.Visible := false;
@@ -292,16 +304,26 @@ begin
 
   for I := FlowPanelInp.ControlCount - 1 downto 0 do
     FlowPanelInp.Controls[i].Free;
+
+  AnsArr := Split(dat.SelectedAnswer,'|');
+  if(length(ansarr) = 0) then
+  begin
+    SetLength(AnsArr,10);
+  end;
+  j := 0;
   I := 0;
   while i < length(dat.StrArray) do
   begin
     lbl := TLabel.Create(nil);
     lbl.Caption := dat.StrArray[i];
     lbl.Parent := FlowPanelInp;
+    lbl.Hint := 'lbl';
     if i + 1 < length(dat.StrArray) then
     begin
       edi := TEdit.Create(nil);
+      edi.Text := AnsArr[j];
       edi.Parent := FlowPanelInp;
+      j := j + 1;
     end;
     i := i + 2;
   end;
@@ -310,6 +332,9 @@ end;
 procedure TTest.LoadO(dat:TQuestionData);
 var btn:Tbutton;
   I: Integer;
+  AnsArr : TSarray;
+  j: Integer;
+  b:boolean;
 begin
   RadioGroupTest.Visible := false;
   PanelMulty.Visible := false;
@@ -322,16 +347,36 @@ begin
   for I := FlowPanelUp.ControlCount - 1 downto 0 do
     FlowPanelUp.Controls[i].Free;
 
+  AnsArr := Split(dat.SelectedAnswer,' ');
+
+  for I := 0 to length(AnsArr) - 1 do
+  begin
+    btn := TButton.Create(nil);
+    btn.Caption := AnsArr[i];
+    btn.Width := length(btn.Caption)*15;
+    btn.OnClick := MoveButtonClick;
+    btn.Parent := FlowPanelUp;
+  end;
+
   for I := 0 to length(dat.StrArray) - 1 do
   begin
+    b := false;
+    for j := 0 to Length(AnsArr) - 1 do
+    begin
+      if(dat.StrArray[i] = AnsArr[j]) then
+      begin
+        b := true;
+        break
+      end;
+    end;
+    if b then
+      continue;
     btn := TButton.Create(nil);
     btn.Caption := dat.StrArray[i];
     btn.Width := length(btn.Caption)*15;
     btn.OnClick := MoveButtonClick;
     btn.Parent := FlowPanelDown;
   end;
-
-
 end;
 
 procedure TTest.MoveButtonClick(Sender: TObject);
@@ -340,6 +385,51 @@ begin
     (sender as TButton).Parent := FlowPanelDown
   else
       (sender as TButton).Parent := FlowPanelUp;
+end;
+
+procedure TTest.SaveTask();
+var
+  I: Integer;
+  b:boolean;
+begin
+  case data[SelectedTask].DataType[1] of
+    'S': begin
+      data[SelectedTask].SelectedAnswer := IntToStr(RadioGroupTest.ItemIndex);
+      if data[SelectedTask].SelectedAnswer = '-1' then
+        data[SelectedTask].SelectedAnswer := '';
+    end;
+    'M': begin
+      data[SelectedTask].SelectedAnswer := '';
+      for I := 0 to PanelMulty.ControlCount - 1 do
+      begin
+        if (PanelMulty.Controls[i] as TCheckBox).Checked then
+          data[SelectedTask].SelectedAnswer := data[SelectedTask].SelectedAnswer + IntToStr(i) + '|';
+      end;
+    end;
+    'I': begin
+       data[SelectedTask].SelectedAnswer := '';
+       b := false;
+       for I := 0 to FlowPanelInp.ControlCount - 1 do
+       begin
+          if(FlowPanelInp.Controls[i].Hint <> 'lbl') then
+          begin
+            data[SelectedTask].SelectedAnswer := data[SelectedTask].SelectedAnswer + (FlowPanelInp.Controls[i] as TEdit).Text + '|';
+            if (FlowPanelInp.Controls[i] as TEdit).Text <> '' then
+              b := true;
+          end;
+       end;
+       if not b then
+         data[SelectedTask].SelectedAnswer := '';
+    end;
+    'O': begin
+      data[SelectedTask].SelectedAnswer := '';
+      for I := 0 to FlowPanelUp.ControlCount - 1 do
+      begin
+        Data[SelectedTask].SelectedAnswer := Data[SelectedTask].SelectedAnswer + (FlowPanelUp.Controls[i] as TButton).Caption + ' ';
+      end;
+      Data[SelectedTask].SelectedAnswer := Trim(Data[SelectedTask].SelectedAnswer);
+    end;
+  end;
 end;
 
 end.
