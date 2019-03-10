@@ -5,7 +5,7 @@ object Test: TTest
   ClientHeight = 631
   ClientWidth = 976
   Color = clBtnFace
-  Constraints.MinHeight = 500
+  Constraints.MinHeight = 600
   Constraints.MinWidth = 800
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -51,7 +51,7 @@ object Test: TTest
       AlignWithMargins = True
       Left = 26
       Top = 39
-      Width = 678
+      Width = 615
       Height = 79
       Margins.Left = 25
       Align = alLeft
@@ -67,10 +67,6 @@ object Test: TTest
         #1082#1086#1083#1100#1082#1086' '#1092#1086#1088#1084' Delphi '#1076#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1086' '#1082' '#1086#1089#1085#1086#1074#1085#1086#1081'.'
       ParentBiDiMode = False
       WordWrap = True
-      ExplicitLeft = 0
-      ExplicitTop = 55
-      ExplicitWidth = 794
-      ExplicitHeight = 67
     end
     object BtnCheck: TButton
       Left = 766
@@ -101,6 +97,16 @@ object Test: TTest
       TabOrder = 2
       OnClick = btnEndingClick
     end
+    object BunBack: TButton
+      Left = 655
+      Top = 42
+      Width = 105
+      Height = 31
+      Anchors = [akTop, akRight]
+      Caption = #1053#1072#1079#1072#1076
+      TabOrder = 3
+      OnClick = BunBackClick
+    end
   end
   object PanelBody: TPanel
     AlignWithMargins = True
@@ -116,6 +122,7 @@ object Test: TTest
     TabOrder = 2
     Visible = False
     object RadioGroupTest: TRadioGroup
+      AlignWithMargins = True
       Left = 1
       Top = 0
       Width = 104
@@ -123,35 +130,46 @@ object Test: TTest
       Margins.Left = 50
       Margins.Top = 0
       Margins.Right = 50
-      Margins.Bottom = 50
+      Margins.Bottom = 0
       TabOrder = 0
       Visible = False
     end
     object PanelMulty: TFlowPanel
+      AlignWithMargins = True
       Left = 120
       Top = 3
       Width = 129
       Height = 142
+      Margins.Left = 50
+      Margins.Top = 0
+      Margins.Right = 50
+      Margins.Bottom = 0
       TabOrder = 1
       Visible = False
     end
     object PanelInp: TPanel
-      Left = 1
-      Top = 239
+      Left = 6
+      Top = 155
       Width = 296
-      Height = 150
+      Height = 246
       TabOrder = 2
       Visible = False
       object FlowPanelInp: TFlowPanel
         AlignWithMargins = True
-        Left = 4
+        Left = 51
         Top = 101
-        Width = 288
-        Height = 41
+        Width = 194
+        Height = 44
+        Margins.Left = 50
         Margins.Top = 100
-        Align = alTop
+        Margins.Right = 50
+        Margins.Bottom = 100
+        Align = alClient
         TabOrder = 0
-        ExplicitWidth = 337
+        ExplicitLeft = 4
+        ExplicitTop = 64
+        ExplicitWidth = 288
+        ExplicitHeight = 78
       end
     end
     object PanelMove: TPanel
@@ -166,7 +184,7 @@ object Test: TTest
         Left = 4
         Top = 51
         Width = 433
-        Height = 80
+        Height = 126
         Margins.Top = 50
         Align = alTop
         TabOrder = 0
@@ -174,9 +192,9 @@ object Test: TTest
       object FlowPanelDown: TFlowPanel
         AlignWithMargins = True
         Left = 4
-        Top = 67
+        Top = 21
         Width = 433
-        Height = 80
+        Height = 126
         Margins.Top = 0
         Margins.Bottom = 50
         Align = alBottom

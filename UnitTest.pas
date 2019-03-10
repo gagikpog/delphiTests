@@ -27,6 +27,7 @@ type
     PanelMove: TPanel;
     FlowPanelUp: TFlowPanel;
     FlowPanelDown: TFlowPanel;
+    BunBack: TButton;
     procedure FormResize(Sender: TObject);
     procedure BtnLClick(Sender: TObject);
     Procedure ParseTest();
@@ -43,6 +44,7 @@ type
     procedure LoadO(dat:TQuestionData);
     procedure MoveButtonClick(Sender: TObject);
     procedure SaveTask();
+    procedure BunBackClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,10 +75,19 @@ end;
 
 procedure TTest.btnEndingClick(Sender: TObject);
 var res:integer;
-  I: Integer;
+  I,r: Integer;
+
 begin
-   timer1.Enabled := false;
    SaveTask();
+   if Timer1.Enabled then
+   begin
+     r := MessageBox(handle,'Вы действительно хотите закнчить тест?','Предупреждение',MB_YESNO);
+     if r <> idyes then
+        exit;
+   end else begin
+     MessageBox(handle,'Время вышло!','Предупреждение',MB_OK)
+   end;
+   timer1.Enabled := false;
    res := 0;
    for I := 0 to Length(Data)-1 do
    begin
@@ -98,6 +109,17 @@ begin
    timer1.Enabled := true;
    LoadLevel(SelectedTask);
    SetSelectedBtnColor();
+end;
+
+procedure TTest.BunBackClick(Sender: TObject);
+begin
+   SaveTask();
+   if SelectedTask > 0 then
+   begin
+      SelectedTask := SelectedTask - 1;
+      LoadLevel(SelectedTask);
+      SetSelectedBtnColor();
+   end;
 end;
 
 procedure TTest.FormCreate(Sender: TObject);
@@ -255,6 +277,7 @@ var
 cb:TCheckBox;
   I,J: Integer;
   AnsArr : TSarray;
+  topmargin: integer;
 begin
   RadioGroupTest.Visible := false;
   PanelInp.Visible := false;
@@ -270,15 +293,18 @@ begin
     AnsArr[0] := 'empty';
   end;
   LabelQuestion.Caption := Dat.Question;
+  topMargin := 50;
+  if length(dat.StrArray) > 0 then
+    topMargin := trunc(PanelMulty.Height / (length(dat.StrArray)+1))-10;
   for I := 0 to length(dat.StrArray) - 1 do
   begin
     cb := TCheckBox.Create(nil);
     cb.Caption := dat.StrArray[i];
     cb.AlignWithMargins := true;
-    cb.Margins.Top := 20;
-    cb.Margins.Left := 50;
+    cb.Margins.Top := trunc(topMargin/2);
+    cb.Margins.Bottom := trunc(topMargin/2);
+    cb.Margins.Left := 10;
     cb.Margins.Right := 500;
-    cb.Margins.Bottom := 20;
     cb.Height := 30;
     cb.Parent := PanelMulty;
     if AnsArr[j] = IntToStr(i) then
@@ -317,11 +343,15 @@ begin
     lbl := TLabel.Create(nil);
     lbl.Caption := dat.StrArray[i];
     lbl.Parent := FlowPanelInp;
+    lbl.AlignWithMargins := true;
+    lbl.Margins.Top := 8;
     lbl.Hint := 'lbl';
     if i + 1 < length(dat.StrArray) then
     begin
       edi := TEdit.Create(nil);
       edi.Text := AnsArr[j];
+      edi.AlignWithMargins := true;
+      edi.Margins.Top := 5;
       edi.Parent := FlowPanelInp;
       j := j + 1;
     end;
@@ -354,6 +384,9 @@ begin
     btn := TButton.Create(nil);
     btn.Caption := AnsArr[i];
     btn.Width := length(btn.Caption)*15;
+    if btn.Width < 50 then
+      btn.Width := 50;
+    btn.Height := 40;
     btn.OnClick := MoveButtonClick;
     btn.Parent := FlowPanelUp;
   end;
@@ -374,6 +407,9 @@ begin
     btn := TButton.Create(nil);
     btn.Caption := dat.StrArray[i];
     btn.Width := length(btn.Caption)*15;
+    if btn.Width < 50 then
+      btn.Width := 50;
+    btn.Height := 40;
     btn.OnClick := MoveButtonClick;
     btn.Parent := FlowPanelDown;
   end;
