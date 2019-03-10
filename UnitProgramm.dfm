@@ -29,5 +29,12 @@ object FormProgramm: TFormProgramm
     Height = 73
     Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090
     TabOrder = 1
+    OnClick = Button2Click
+  end
+  object ADOQuery1: TADOQuery
+    Connection = FormAutor.ADOConnectionGeneral
+    Parameters = <>
+    Left = 304
+    Top = 296
   end
 end

@@ -41,8 +41,6 @@ object FormRegistered: TFormRegistered
     Align = alBottom
     Caption = #1055#1077#1088#1089#1086#1085#1072#1083#1100#1085#1072#1103' '#1076#1072#1085#1085#1099#1077
     TabOrder = 2
-    ExplicitTop = 87
-    ExplicitWidth = 428
   end
   object EditRegName: TEdit
     Left = 16

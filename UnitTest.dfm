@@ -166,10 +166,6 @@ object Test: TTest
         Margins.Bottom = 100
         Align = alClient
         TabOrder = 0
-        ExplicitLeft = 4
-        ExplicitTop = 64
-        ExplicitWidth = 288
-        ExplicitHeight = 78
       end
     end
     object PanelMove: TPanel

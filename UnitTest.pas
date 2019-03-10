@@ -58,6 +58,11 @@ var
   SelectedTask:integer;
   Timeout:integer;
   TasksCount:integer;
+  ///////////////////////
+  ///  interfase
+  TestName:string;
+  TestRight:integer;
+
 implementation
 
 {$R *.dfm}
@@ -94,6 +99,8 @@ begin
      if AnsiLowerCase(Data[i].SelectedAnswer) = AnsiLowerCase(Data[i].Answer) then
        res := res + 1;
    end;
+   TestRight := res;
+   TestName := Caption;
    ShowMessage('correct '+IntToStr(res)+' out of ' + IntToStr(TasksCount));
    Close;
 end;

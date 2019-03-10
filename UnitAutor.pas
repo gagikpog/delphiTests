@@ -22,12 +22,13 @@ type
   private
     { Private declarations }
   public
+   var
+    AuthUserID:integer;
     { Public declarations }
   end;
 
 var
   FormAutor: TFormAutor;
-
 implementation
 
 {$R *.dfm}
@@ -50,6 +51,7 @@ begin
    if  ResultLogPass = TempLoginPass then
    begin
       Hide;
+      AuthUserID := ADODataSetUserTable.FieldValues['IDUSER'];
       FormProgramm.ShowModal;
       close;
    end;
@@ -84,5 +86,4 @@ begin
     end;
     LabelInfoNone.Caption := '';
 end;
-
 end.
