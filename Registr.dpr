@@ -13,10 +13,8 @@ uses
 
 begin
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TFormAutor, FormAutor);
+  Application.MainFormOnTaskbar := false;
   Application.CreateForm(TFormProgramm, FormProgramm);
-  Application.CreateForm(TFormRegistered, FormRegistered);
-  //Application.CreateForm(TFormTable, FormTable);
+  Application.CreateForm(TFormAutor, FormAutor);
   Application.Run;
 end.

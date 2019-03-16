@@ -22,6 +22,7 @@ type
     ADOQueryStartRegistered: TADOQuery;
     ADOQueryCheckUser: TADOQuery;
     procedure ButtonStartRegistratedClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,6 +101,11 @@ begin
   ADOQueryStartRegistered.Parameters.ParamByName('RegUSerGroupPersonal').Value:=EditRegGroup.Text;
   ADOQueryStartRegistered.ExecSQL;
   close;
+end;
+
+procedure TFormRegistered.FormCreate(Sender: TObject);
+begin
+DateTimePickerRegBirthDay.Date := now();
 end;
 
 end.

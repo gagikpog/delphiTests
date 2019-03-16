@@ -62,6 +62,8 @@ var
   ///  interfase
   TestName:string;
   TestRight:integer;
+  Finishing:boolean;
+  Complexity:string;
 
 implementation
 
@@ -101,12 +103,17 @@ begin
    end;
    TestRight := res;
    TestName := Caption;
-   ShowMessage('correct '+IntToStr(res)+' out of ' + IntToStr(TasksCount));
+   //ShowMessage('correct '+IntToStr(res)+' out of ' + IntToStr(TasksCount));
+   Finishing := true;
    Close;
 end;
 
 procedure TTest.BtnLClick(Sender: TObject);
 begin
+   if (sender as TButton).Tag = BtnL1.Tag then Complexity := 'Легкий';
+   if (sender as TButton).Tag = BtnL2.Tag then Complexity := 'Средний';
+   if (sender as TButton).Tag = BtnL3.Tag then Complexity := 'Сложный';
+
    LabelTime.Visible := true;
    panelLevel.Visible := false;
    PanelBody.Visible := true;
@@ -133,6 +140,7 @@ procedure TTest.FormCreate(Sender: TObject);
 var btn:TLabel;
   I: Integer;
 begin
+  Finishing := false;
   TasksCount := 10;
   SelectedTask := 0;
   Randomize;

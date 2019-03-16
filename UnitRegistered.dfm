@@ -14,6 +14,7 @@ object FormRegistered: TFormRegistered
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 18
   object EditRegLogin: TEdit
@@ -71,8 +72,10 @@ object FormRegistered: TFormRegistered
     Top = 160
     Width = 137
     Height = 26
+    Style = csDropDownList
+    ItemIndex = 0
     TabOrder = 6
-    Text = #1042#1099#1073#1077#1088#1080#1090#1077' '#1087#1086#1083
+    Text = #1052#1091#1078'.'
     Items.Strings = (
       #1052#1091#1078'.'
       #1046#1077#1085'.')
@@ -83,7 +86,7 @@ object FormRegistered: TFormRegistered
     Width = 137
     Height = 26
     Date = 43458.000000000000000000
-    Time = 0.623866076392005200
+    Time = 0.430925810185726700
     TabOrder = 7
   end
   object EditRegGroup: TEdit

@@ -210,7 +210,7 @@ object Test: TTest
       Top = 48
       Width = 169
       Height = 40
-      Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 1'
+      Caption = #1051#1077#1075#1082#1080#1081
       TabOrder = 0
       OnClick = BtnLClick
     end
@@ -220,7 +220,7 @@ object Test: TTest
       Top = 106
       Width = 169
       Height = 40
-      Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 2'
+      Caption = #1057#1088#1077#1076#1085#1080#1081
       TabOrder = 1
       OnClick = BtnLClick
     end
@@ -230,7 +230,7 @@ object Test: TTest
       Top = 168
       Width = 169
       Height = 40
-      Caption = #1057#1083#1086#1078#1085#1086#1089#1090#1100' 3'
+      Caption = #1057#1083#1086#1078#1085#1099#1081
       TabOrder = 2
       OnClick = BtnLClick
     end

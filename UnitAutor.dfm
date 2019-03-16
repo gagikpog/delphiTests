@@ -3,7 +3,7 @@ object FormAutor: TFormAutor
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
+  Caption = #1042#1093#1086#1076
   ClientHeight = 139
   ClientWidth = 304
   Color = clBtnFace
@@ -14,6 +14,7 @@ object FormAutor: TFormAutor
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 18
   object LabelInfoNone: TLabel

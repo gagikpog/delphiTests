@@ -19,6 +19,7 @@ type
     procedure ButtonRegistrationClick(Sender: TObject);
     procedure ButtonEnterClick(Sender: TObject);
     procedure EditPasswordKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,7 +53,7 @@ begin
    begin
       Hide;
       AuthUserID := ADODataSetUserTable.FieldValues['IDUSER'];
-      FormProgramm.ShowModal;
+      //FormProgramm.ShowModal;
       close;
    end;
    ADODataSetUserTable.Next;
@@ -61,8 +62,10 @@ begin
 end;
 
 procedure TFormAutor.ButtonRegistrationClick(Sender: TObject);
+var FormReg: TFormRegistered;
 begin
-  FormRegistered.ShowModal;
+  FormReg := TFormRegistered.Create(nil);
+  FormReg.ShowModal;
   ADODataSetUserTable.Active := false;
   ADODataSetUserTable.Active := true;
 end;
@@ -86,4 +89,9 @@ begin
     end;
     LabelInfoNone.Caption := '';
 end;
+procedure TFormAutor.FormCreate(Sender: TObject);
+begin
+AuthUserID := -1;
+end;
+
 end.
