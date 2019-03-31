@@ -32,6 +32,13 @@ object Test: TTest
     ExplicitLeft = 734
     ExplicitTop = 464
   end
+  object Image1: TImage
+    Left = 0
+    Top = 0
+    Width = 109
+    Height = 57
+    AutoSize = True
+  end
   object PanelHead: TPanel
     AlignWithMargins = True
     Left = 50
@@ -199,37 +206,38 @@ object Test: TTest
     end
   end
   object PanelLevel: TPanel
-    Left = 437
-    Top = 382
-    Width = 317
-    Height = 257
+    Left = 389
+    Top = 218
+    Width = 436
+    Height = 335
+    ParentBackground = False
     TabOrder = 0
     object BtnL1: TButton
-      Tag = 300
-      Left = 72
-      Top = 48
-      Width = 169
-      Height = 40
+      Tag = 1200
+      Left = 75
+      Top = 37
+      Width = 281
+      Height = 80
       Caption = #1051#1077#1075#1082#1080#1081
       TabOrder = 0
       OnClick = BtnLClick
     end
     object BtnL2: TButton
-      Tag = 480
-      Left = 72
-      Top = 106
-      Width = 169
-      Height = 40
+      Tag = 900
+      Left = 75
+      Top = 132
+      Width = 281
+      Height = 80
       Caption = #1057#1088#1077#1076#1085#1080#1081
       TabOrder = 1
       OnClick = BtnLClick
     end
     object BtnL3: TButton
       Tag = 600
-      Left = 72
-      Top = 168
-      Width = 169
-      Height = 40
+      Left = 75
+      Top = 225
+      Width = 281
+      Height = 80
       Caption = #1057#1083#1086#1078#1085#1099#1081
       TabOrder = 2
       OnClick = BtnLClick

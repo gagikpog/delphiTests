@@ -5,6 +5,8 @@ object FormTable: TFormTable
   ClientHeight = 299
   ClientWidth = 790
   Color = clBtnFace
+  Constraints.MinHeight = 338
+  Constraints.MinWidth = 806
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -15
@@ -76,7 +78,6 @@ object FormTable: TFormTable
     Height = 89
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 703
     object DBText1: TDBText
       AlignWithMargins = True
       Left = 16
@@ -121,7 +122,6 @@ object FormTable: TFormTable
     Top = 232
   end
   object ADOQuery1: TADOQuery
-    Active = True
     Connection = FormAutor.ADOConnectionGeneral
     CursorType = ctStatic
     Parameters = <>
@@ -141,13 +141,12 @@ object FormTable: TFormTable
     Top = 8
   end
   object ADOQuery2: TADOQuery
-    Active = True
     Connection = FormAutor.ADOConnectionGeneral
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'SELECT * FROM [Users] WHERE [IDUSER] = 33;')
-    Left = 608
+    Left = 584
     Top = 8
   end
 end

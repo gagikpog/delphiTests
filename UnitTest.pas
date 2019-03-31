@@ -28,6 +28,7 @@ type
     FlowPanelUp: TFlowPanel;
     FlowPanelDown: TFlowPanel;
     BunBack: TButton;
+    Image1: TImage;
     procedure FormResize(Sender: TObject);
     procedure BtnLClick(Sender: TObject);
     Procedure ParseTest();
@@ -113,7 +114,7 @@ begin
    if (sender as TButton).Tag = BtnL1.Tag then Complexity := 'Легкий';
    if (sender as TButton).Tag = BtnL2.Tag then Complexity := 'Средний';
    if (sender as TButton).Tag = BtnL3.Tag then Complexity := 'Сложный';
-
+   image1.Visible := false;
    LabelTime.Visible := true;
    panelLevel.Visible := false;
    PanelBody.Visible := true;
@@ -162,6 +163,8 @@ begin
   RadioGroupTest.Align := alClient;
   PanelInp.Align := alClient;
   PanelMove.Align := alClient;
+  //image1.Align := alClient;
+  image1.Picture.LoadFromFile('background.bmp');
 
 end;
 
@@ -169,6 +172,7 @@ procedure TTest.FormResize(Sender: TObject);
 var
   w,l:integer;
   I: Integer;
+  a1,a2:real;
 begin
   panelLevel.Left := trunc((width - panelLevel.Width-15)/2);
   panelLevel.top := trunc((height - panelLevel.height-40)/2);
@@ -177,6 +181,18 @@ begin
   PanelButtons.Padding.Left := trunc(l/2);
   for I := 0 to PanelButtons.ControlCount - 1 do
     PanelButtons.Controls[i].Width := w;
+
+  a1 := image1.Picture.Width / image1.Picture.Height;
+  a2 := test.Width / test.Height;
+  if(a2>a1) then
+   begin
+    image1.Width := test.Width;
+    image1.Height := test.Height*4;
+   end else begin
+    image1.Width := test.Width *4;
+    image1.Height := test.Height;
+   end;
+
 end;
 
 Procedure TTest.levelBtms(Sender: TObject);
