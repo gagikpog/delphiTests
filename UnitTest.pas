@@ -59,6 +59,7 @@ var
   SelectedTask:integer;
   Timeout:integer;
   TasksCount:integer;
+  btmsLine:Integer;
   ///////////////////////
   ///  interfase
   TestName:string;
@@ -141,6 +142,7 @@ procedure TTest.FormCreate(Sender: TObject);
 var btn:TLabel;
   I: Integer;
 begin
+  btmsLine := 1;
   Finishing := false;
   TasksCount := 10;
   SelectedTask := 0;
@@ -153,7 +155,7 @@ begin
     btn.Font.Size := 15;
     btn.Cursor := crHandPoint;
     btn.Caption := IntToStr(i);
-    btn.Height := PanelButtons.Height-2;
+    btn.Height := 33;
     btn.OnClick := levelBtms;
     btn.Transparent := false;
     btn.Alignment := taCenter;
@@ -176,8 +178,8 @@ var
 begin
   panelLevel.Left := trunc((width - panelLevel.Width-15)/2);
   panelLevel.top := trunc((height - panelLevel.height-40)/2);
-  w := trunc((PanelButtons.Width-50)/TasksCount);
-  l := PanelButtons.Width - w*TasksCount;
+  w := trunc((PanelButtons.Width-50)/(TasksCount div btmsLine + 1));
+  l := PanelButtons.Width - w*(TasksCount div btmsLine + 1);
   PanelButtons.Padding.Left := trunc(l/2);
   for I := 0 to PanelButtons.ControlCount - 1 do
     PanelButtons.Controls[i].Width := w;
@@ -211,13 +213,17 @@ var
   str:string;
 begin
   filename := 'test.tdb';
-  TestsArray := Split(Decode(ReadFromFile(filename),4),'/');
+  TestsArray := Split(Decode(ReadFromFile(filename),4),'//');
   Caption := Split(TestsArray[0],#13#10)[0];
   TasksCount := StrToInt(trim(Split(TestsArray[0],':')[1]));
   DeleteX(TestsArray,0);
   SetLength(Order,Length(TestsArray));
   if(TasksCount >= Length(TestsArray))then
       TasksCount := Length(TestsArray);
+
+  btmsLine :=  (TasksCount div 30) + 1;
+  PanelHead.Height := PanelHead.Height + PanelButtons.Height*btmsLine;
+  PanelButtons.Height := PanelButtons.Height*btmsLine;
 
   for I := 0 to Length(TestsArray)-1 do
   begin

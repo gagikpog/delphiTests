@@ -2,8 +2,8 @@ object Test: TTest
   Left = 0
   Top = 0
   Caption = 'Test'
-  ClientHeight = 631
-  ClientWidth = 976
+  ClientHeight = 639
+  ClientWidth = 1065
   Color = clBtnFace
   Constraints.MinHeight = 600
   Constraints.MinWidth = 800
@@ -17,13 +17,13 @@ object Test: TTest
   OnCreate = FormCreate
   OnResize = FormResize
   DesignSize = (
-    976
-    631)
+    1065
+    639)
   PixelsPerInch = 96
   TextHeight = 18
   object LabelTime: TLabel
-    Left = 926
-    Top = 605
+    Left = 1015
+    Top = 613
     Width = 33
     Height = 18
     Anchors = [akRight, akBottom]
@@ -43,27 +43,28 @@ object Test: TTest
     AlignWithMargins = True
     Left = 50
     Top = 50
-    Width = 876
-    Height = 122
+    Width = 965
+    Height = 129
     Margins.Left = 50
     Margins.Top = 50
     Margins.Right = 50
     Align = alTop
     TabOrder = 1
     Visible = False
+    ExplicitTop = 55
     DesignSize = (
-      876
-      122)
+      965
+      129)
     object LabelQuestion: TLabel
       AlignWithMargins = True
       Left = 26
-      Top = 39
-      Width = 615
-      Height = 79
+      Top = 40
+      Width = 704
+      Height = 85
       Margins.Left = 25
       Align = alLeft
       Alignment = taCenter
-      Anchors = [akLeft, akTop, akRight, akBottom]
+      Anchors = [akRight, akBottom]
       AutoSize = False
       BiDiMode = bdLeftToRight
       Caption = 
@@ -74,53 +75,63 @@ object Test: TTest
         #1082#1086#1083#1100#1082#1086' '#1092#1086#1088#1084' Delphi '#1076#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1086' '#1082' '#1086#1089#1085#1086#1074#1085#1086#1081'.'
       ParentBiDiMode = False
       WordWrap = True
+      ExplicitLeft = 34
+      ExplicitTop = 43
+      ExplicitHeight = 90
     end
     object BtnCheck: TButton
-      Left = 766
-      Top = 42
+      Left = 855
+      Top = 39
       Width = 105
       Height = 31
-      Anchors = [akTop, akRight]
+      Anchors = [akRight, akBottom]
       Caption = #1044#1072#1083#1077#1077
       TabOrder = 0
       OnClick = BtnCheckClick
+      ExplicitLeft = 766
+      ExplicitTop = 42
     end
     object PanelButtons: TFlowPanel
       Left = 1
       Top = 1
-      Width = 874
-      Height = 35
+      Width = 963
+      Height = 36
       Align = alTop
       Padding.Bottom = 1
       TabOrder = 1
+      ExplicitTop = 0
     end
     object btnEnding: TButton
-      Left = 766
-      Top = 79
+      Left = 855
+      Top = 76
       Width = 105
       Height = 31
-      Anchors = [akTop, akRight]
+      Anchors = [akRight, akBottom]
       Caption = #1047#1072#1074#1077#1088#1096#1080#1090#1100
       TabOrder = 2
       OnClick = btnEndingClick
+      ExplicitLeft = 766
+      ExplicitTop = 79
     end
     object BunBack: TButton
-      Left = 655
-      Top = 42
+      Left = 744
+      Top = 39
       Width = 105
       Height = 31
-      Anchors = [akTop, akRight]
+      Anchors = [akRight, akBottom]
       Caption = #1053#1072#1079#1072#1076
       TabOrder = 3
       OnClick = BunBackClick
+      ExplicitLeft = 655
+      ExplicitTop = 42
     end
   end
   object PanelBody: TPanel
     AlignWithMargins = True
     Left = 50
-    Top = 175
-    Width = 876
-    Height = 406
+    Top = 182
+    Width = 965
+    Height = 407
     Margins.Left = 50
     Margins.Top = 0
     Margins.Right = 50
@@ -128,6 +139,9 @@ object Test: TTest
     Align = alClient
     TabOrder = 2
     Visible = False
+    ExplicitTop = 175
+    ExplicitWidth = 876
+    ExplicitHeight = 406
     object RadioGroupTest: TRadioGroup
       AlignWithMargins = True
       Left = 1
