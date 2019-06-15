@@ -92,7 +92,7 @@ begin
    SaveTask();
    if Timer1.Enabled then
    begin
-     r := MessageBox(handle,'Вы действительно хотите закнчить тест?','Предупреждение',MB_YESNO);
+     r := MessageBox(handle,'Вы действительно хотите закончить тест?','Предупреждение',MB_YESNO);
      if r <> idyes then
         exit;
    end else begin

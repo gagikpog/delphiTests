@@ -3,8 +3,8 @@ object FormProgramm: TFormProgramm
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
-  ClientHeight = 275
+  Caption = 'EasyTest'
+  ClientHeight = 276
   ClientWidth = 383
   Color = clBtnFace
   Constraints.MinHeight = 304

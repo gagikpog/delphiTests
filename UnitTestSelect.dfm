@@ -1,7 +1,7 @@
 object testSelect: TtestSelect
   Left = 0
   Top = 0
-  Caption = 'testSelect'
+  Caption = #1042#1099#1073#1086#1088' '#1090#1077#1089#1090#1072
   ClientHeight = 283
   ClientWidth = 373
   Color = clBtnFace
@@ -24,11 +24,11 @@ object testSelect: TtestSelect
   PixelsPerInch = 96
   TextHeight = 18
   object Label1: TLabel
-    Left = 16
+    Left = 80
     Top = 16
-    Width = 134
+    Width = 202
     Height = 18
-    Caption = #1071' '#1093#1079#1095#1090#1086' '#1090#1091#1090' '#1087#1080#1089#1072#1090#1100
+    Caption = #1055#1086#1078#1072#1083#1091#1081#1089#1090#1072', '#1074#1099#1073#1077#1088#1080#1090#1077' '#1090#1077#1089#1090':'
   end
   object ListBox1: TListBox
     Left = 8
