@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Data.Win.ADODB;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Data.Win.ADODB, UnitUtility;
 
 type
   TFormProgramm = class(TForm)
@@ -27,15 +27,25 @@ implementation
 
 {$R *.dfm}
 
-uses UnitTest, UnitAutor, UnitTable;
+uses UnitTest, UnitAutor, UnitTable, UnitTestSelect;
 
 procedure TFormProgramm.Button1Click(Sender: TObject);
  var str:string;
  Rating:integer;
 begin
-  Unittest.Test := TTest.Create(nil);
   hide();
+  testSelect.ShowModal();
+  if testSelect.getTestFileName() = '' then
+  begin
+    show();
+    exit;
+  end;
+
+
+  correntFileName := testSelect.getTestFileName();
+  Unittest.Test := TTest.Create(nil);
   Unittest.Test.ShowModal();
+
   show();
   if not UnitTest.Finishing then
     exit;

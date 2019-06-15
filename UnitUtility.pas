@@ -23,6 +23,7 @@ type
   Function ParseM(str:String):TQuestionData;
   Function ParseI(str:String):TQuestionData;
   Function ParseO(str:String):TQuestionData;
+  var correntFileName: string;
 
 implementation
 
@@ -195,7 +196,7 @@ end;
 Function ParseO(str:String):TQuestionData;
   var arr:TSarray;
   res:TQuestionData;
-  J:integer;
+ // J:integer;
 begin
    arr := Split(str,#13#10);
    res.DataType := 'O';

@@ -46,10 +46,12 @@ type
     procedure MoveButtonClick(Sender: TObject);
     procedure SaveTask();
     procedure BunBackClick(Sender: TObject);
+
   private
     { Private declarations }
   public
     { Public declarations }
+    var   filename:string;
   end;
 
 var
@@ -142,6 +144,7 @@ procedure TTest.FormCreate(Sender: TObject);
 var btn:TLabel;
   I: Integer;
 begin
+
   btmsLine := 1;
   Finishing := false;
   TasksCount := 10;
@@ -184,6 +187,9 @@ begin
   for I := 0 to PanelButtons.ControlCount - 1 do
     PanelButtons.Controls[i].Width := w;
 
+  for I := 0 to PanelMulty.ControlCount - 1 do
+    PanelMulty.Controls[i].Width := PanelMulty.Width-50;
+
   a1 := image1.Picture.Width / image1.Picture.Height;
   a2 := test.Width / test.Height;
   if(a2>a1) then
@@ -207,13 +213,13 @@ end;
 
 Procedure TTest.ParseTest();
 var
-  filename:string;
+
   I: Integer;
   Order : TIarray;
-  str:string;
+//  str:string;
 begin
-  filename := 'test.tdb';
-  TestsArray := Split(Decode(ReadFromFile(filename),4),'//');
+  filename := correntFileName;
+  TestsArray := Split(Decode(ReadFromFile(filename), 4),'//');
   Caption := Split(TestsArray[0],#13#10)[0];
   TasksCount := StrToInt(trim(Split(TestsArray[0],':')[1]));
   DeleteX(TestsArray,0);
@@ -330,9 +336,9 @@ begin
     AnsArr[0] := 'empty';
   end;
   LabelQuestion.Caption := Dat.Question;
-  topMargin := 50;
+  topMargin := 45;
   if length(dat.StrArray) > 0 then
-    topMargin := trunc(PanelMulty.Height / (length(dat.StrArray)+1))-10;
+    topMargin := trunc(PanelMulty.Height / (length(dat.StrArray)+3))-10;
   for I := 0 to length(dat.StrArray) - 1 do
   begin
     cb := TCheckBox.Create(nil);
@@ -342,7 +348,10 @@ begin
     cb.Margins.Bottom := trunc(topMargin/2);
     cb.Margins.Left := 10;
     cb.Margins.Right := 500;
-    cb.Height := 30;
+    cb.Height := 45;
+
+    cb.Width := 1000;
+    cb.WordWrap := true;
     cb.Parent := PanelMulty;
     if AnsArr[j] = IntToStr(i) then
     begin

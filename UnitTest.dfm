@@ -2,8 +2,8 @@ object Test: TTest
   Left = 0
   Top = 0
   Caption = 'Test'
-  ClientHeight = 639
-  ClientWidth = 1065
+  ClientHeight = 842
+  ClientWidth = 1340
   Color = clBtnFace
   Constraints.MinHeight = 600
   Constraints.MinWidth = 800
@@ -17,13 +17,13 @@ object Test: TTest
   OnCreate = FormCreate
   OnResize = FormResize
   DesignSize = (
-    1065
-    639)
+    1340
+    842)
   PixelsPerInch = 96
   TextHeight = 18
   object LabelTime: TLabel
-    Left = 1015
-    Top = 613
+    Left = 1290
+    Top = 816
     Width = 33
     Height = 18
     Anchors = [akRight, akBottom]
@@ -43,7 +43,7 @@ object Test: TTest
     AlignWithMargins = True
     Left = 50
     Top = 50
-    Width = 965
+    Width = 1240
     Height = 129
     Margins.Left = 50
     Margins.Top = 50
@@ -51,9 +51,9 @@ object Test: TTest
     Align = alTop
     TabOrder = 1
     Visible = False
-    ExplicitTop = 55
+    ExplicitWidth = 965
     DesignSize = (
-      965
+      1240
       129)
     object LabelQuestion: TLabel
       AlignWithMargins = True
@@ -80,7 +80,7 @@ object Test: TTest
       ExplicitHeight = 90
     end
     object BtnCheck: TButton
-      Left = 855
+      Left = 1130
       Top = 39
       Width = 105
       Height = 31
@@ -88,21 +88,20 @@ object Test: TTest
       Caption = #1044#1072#1083#1077#1077
       TabOrder = 0
       OnClick = BtnCheckClick
-      ExplicitLeft = 766
-      ExplicitTop = 42
+      ExplicitLeft = 855
     end
     object PanelButtons: TFlowPanel
       Left = 1
       Top = 1
-      Width = 963
+      Width = 1238
       Height = 36
       Align = alTop
       Padding.Bottom = 1
       TabOrder = 1
-      ExplicitTop = 0
+      ExplicitWidth = 963
     end
     object btnEnding: TButton
-      Left = 855
+      Left = 1130
       Top = 76
       Width = 105
       Height = 31
@@ -110,11 +109,10 @@ object Test: TTest
       Caption = #1047#1072#1074#1077#1088#1096#1080#1090#1100
       TabOrder = 2
       OnClick = btnEndingClick
-      ExplicitLeft = 766
-      ExplicitTop = 79
+      ExplicitLeft = 855
     end
     object BunBack: TButton
-      Left = 744
+      Left = 1019
       Top = 39
       Width = 105
       Height = 31
@@ -122,16 +120,15 @@ object Test: TTest
       Caption = #1053#1072#1079#1072#1076
       TabOrder = 3
       OnClick = BunBackClick
-      ExplicitLeft = 655
-      ExplicitTop = 42
+      ExplicitLeft = 744
     end
   end
   object PanelBody: TPanel
     AlignWithMargins = True
     Left = 50
     Top = 182
-    Width = 965
-    Height = 407
+    Width = 1240
+    Height = 610
     Margins.Left = 50
     Margins.Top = 0
     Margins.Right = 50
@@ -139,9 +136,8 @@ object Test: TTest
     Align = alClient
     TabOrder = 2
     Visible = False
-    ExplicitTop = 175
-    ExplicitWidth = 876
-    ExplicitHeight = 406
+    ExplicitWidth = 965
+    ExplicitHeight = 407
     object RadioGroupTest: TRadioGroup
       AlignWithMargins = True
       Left = 1
@@ -154,6 +150,7 @@ object Test: TTest
       Margins.Bottom = 0
       TabOrder = 0
       Visible = False
+      WordWrap = True
     end
     object PanelMulty: TFlowPanel
       AlignWithMargins = True
@@ -220,8 +217,8 @@ object Test: TTest
     end
   end
   object PanelLevel: TPanel
-    Left = 389
-    Top = 218
+    Left = 896
+    Top = 248
     Width = 436
     Height = 335
     ParentBackground = False
